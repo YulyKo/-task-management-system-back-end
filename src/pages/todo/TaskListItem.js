@@ -18,7 +18,7 @@ export default class TaskListItem extends Component {
   }
 
   deleteTask() {
-    const id = this.props.id;
+    const id = this.props.task.id;
     for (let index = 0; index < tasks.length; index++) {
       const task = tasks[index];
       if (task.id === id) {
@@ -31,7 +31,7 @@ export default class TaskListItem extends Component {
   render() {
     return <div>
       <input type="checkbox"/>
-      <p>{this.props.title}</p>
+      <p>{this.props.task.title}</p>
       <button onClick={this.toggleHidden.bind(this)}>Edit - it is link</button>
       {
         !this.state.isHidden && 

@@ -32,7 +32,7 @@ export class TasksListPage extends Component {
         </ModalWindowShell>
       }
       {tasks.map((task, index) => (
-        <TaskListItem key={index} id={task.id} title={task.title} />
+        <TaskListItem key={index} task={task} />
       ))}
     </div>
   }
