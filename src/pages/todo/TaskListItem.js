@@ -1,9 +1,16 @@
 import React, { Component }  from 'react';
-import tasks from "../../utils/tasks";
-import ModalWindowShell from "./ModalWindowShell";
-import TaskForm from "./TaskForm";
+import tasks from '../../utils/tasks';
+import ModalWindowShell from './ModalWindowShell';
+import TaskForm from './TaskForm';
+import PropTypes from 'prop-types';
 
 export default class TaskListItem extends Component {
+  static get propTypes() { 
+    return { 
+      task: PropTypes.any,
+    }; 
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +47,6 @@ export default class TaskListItem extends Component {
         </ModalWindowShell>
       }
       <button onClick={this.deleteTask.bind(this)}>Delete</button>
-    </div>
+    </div>;
   }
 }

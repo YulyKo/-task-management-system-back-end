@@ -1,9 +1,16 @@
 import React, { Component }  from 'react';
-import { Task } from "../../models/task.class";
-import { PRIORITIES } from "../../utils/priorities";
-import tasks from "../../utils/tasks";
+import { Task } from '../../models/task.class';
+import { PRIORITIES } from '../../utils/priorities';
+import tasks from '../../utils/tasks';
+import PropTypes from 'prop-types';
 
 export default class TaskForm extends Component {
+  static get propTypes() { 
+    return { 
+      task: PropTypes.any,
+    }; 
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -64,11 +71,11 @@ export default class TaskForm extends Component {
 
       <div onChange={this.handleChangePriority}>
         {PRIORITIES.map((data, index) =>
-            <input key={index} type="radio" value={data} name="priority"/>
-          )
+          <input key={index} type="radio" value={data} name="priority"/>
+        )
         }
       </div>
       <button type="submit">Add</button>
-    </form>
+    </form>;
   }
 }

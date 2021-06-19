@@ -6,6 +6,6 @@ export class NotFound extends React.Component {
     return <main>
       <h1>404 page not found</h1>
       <Link to="/">go back</Link>
-    </main>
+    </main>;
   }
 }

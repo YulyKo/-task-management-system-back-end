@@ -11,7 +11,7 @@ const Router = BrowserRouter;
 
 ReactDOM.render(
   <React.StrictMode>
-   <Router>
+    <Router>
       <Switch>
         <Route exact path="/" component={ HomePage } />
         <Route path="/auth" component={ AuthPage } />

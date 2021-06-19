@@ -6,6 +6,6 @@ export class AuthPage extends React.Component {
     return <main>
       <h1>form for auth here</h1>
       <Link to="/">go back</Link>
-    </main>
+    </main>;
   }
 }

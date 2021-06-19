@@ -12,13 +12,12 @@ module.exports = {
   'plugins': [
     'react'
   ],
-  'extends': ['eslint:recommended', 'plugin:react/recommended'],
+  'extends': ['plugin:react/recommended'],
   'rules': {
     'comma-dangle': 0,
     'react/jsx-uses-vars': 1,
-    'react/display-name': 1,
     'no-unused-vars': 'warn',
-    'no-console': 1,
+    // 'no-console': 1,
     'no-unexpected-multiline': 'warn',
     'indent': ['error', 2],
     'linebreak-style': ['error', 'unix'],

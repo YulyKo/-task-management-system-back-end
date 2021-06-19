@@ -7,6 +7,6 @@ export class HomePage extends React.Component {
       <h1>Welcome to TMS</h1>
       <p>It is task manager system</p>
       <Link to="/auth">Auth</Link>
-    </main>
+    </main>;
   }
 }
