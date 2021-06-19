@@ -64,6 +64,10 @@ export default class TaskForm extends Component {
     const task = this.compareTask();
     // TODO update data local
     // http calling here
+    this.putTask(task);
+  }
+
+  putTask(task) {
     fetch(`${TASKS}/${this.state.task.id}`, {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
