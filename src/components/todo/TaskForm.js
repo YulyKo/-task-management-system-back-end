@@ -58,13 +58,22 @@ export default class TaskForm extends Component {
       })
       .catch(error => console.log(error));
   }
-
+    
   update() {
     // set task value
     const task = this.compareTask();
-    // update data local
-    // tasks[task.id] = task;
-    // TODO add http calling here
+    // TODO update data local
+    // http calling here
+    fetch(`${TASKS}/${this.state.task.id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(task),
+    })
+      .then(res => {
+        // add task to local storage(?)
+        this.props.toggleHidden();
+      })
+      .catch(error => console.log(error));
   }
 
   setFieldValue(field, e){
