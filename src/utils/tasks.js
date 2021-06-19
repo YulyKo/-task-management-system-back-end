@@ -4,7 +4,7 @@ module.exports = [
     'title': 'test tasks 1',
     'description': 'some text here 3311',
     'dueDate': '2021-06-16T09:38:32.196Z',
-    'isDone': false,
+    'isDone': true,
     'priority': 5,
     'createdAt': '2021-06-18T13:19:05.917Z',
     'updatedAt': '2021-06-18T13:19:05.917Z'

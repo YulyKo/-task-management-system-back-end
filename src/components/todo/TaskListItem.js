@@ -24,6 +24,16 @@ export default class TaskListItem extends Component {
     });
   }
 
+  handleTaskStatus() {
+    const id = this.props.task.id;
+    tasks.forEach((task) => {
+      if (task.id === id) {
+        tasks.isDone = true;
+      }
+    });
+    // http post this.props.task.isDone = true
+  }
+
   deleteTask() {
     const id = this.props.task.id;
     for (let index = 0; index < tasks.length; index++) {
@@ -37,7 +47,8 @@ export default class TaskListItem extends Component {
 
   render() {
     return <div>
-      <input type="checkbox"/>
+      <input type="checkbox" defaultChecked={this.props.task.isDone}
+        onChange={this.handleTaskStatus.bind(this)} />
       <p>{this.props.task.title}</p>
       <button onClick={this.toggleHidden.bind(this)}>Edit - it is link</button>
       {
