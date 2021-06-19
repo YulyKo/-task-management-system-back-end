@@ -38,30 +38,23 @@ export default class TaskForm extends Component {
   }
 
   create() {
-    // set task value
-    // const task = this.compareTask();
-    // create data local
-    // tasks.push(task);
-    // TODO add http calling here
     let task = this.state.task;
+    // set default data
     task.dueDate = task.dueDate ? task.dueDate : Date.now();
     task.priority = +task.priority;
-    this.sendTask(this.state.task);
+    this.sendTask(task);
   }
 
   sendTask(task) {
-    console.log(JSON.stringify(task));
-    const form = new FormData(document.getElementById('form'));
-    const ee = task;
-    console.log(ee);
+    // http post task here
     fetch(TASKS, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(task),
     })
       .then(res => {
-        console.log(res);
-        // this.props.toggleHidden();
+        // add task to local storage(?)
+        this.props.toggleHidden();
       })
       .catch(error => console.log(error));
   }
