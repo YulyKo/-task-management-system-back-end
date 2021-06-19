@@ -12,11 +12,12 @@ module.exports = {
   'plugins': [
     'react'
   ],
-  'extends': ['plugin:react/recommended'],
+  'extends': [
+    'plugin:react/recommended'
+  ],
   'rules': {
     'comma-dangle': 0,
     'react/jsx-uses-vars': 1,
-    // 'no-console': 1,
     'no-unexpected-multiline': 'warn',
     'indent': ['error', 2],
     'linebreak-style': ['error', 'unix'],
