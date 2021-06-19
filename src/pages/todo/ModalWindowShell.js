@@ -24,7 +24,7 @@ export default class ModalWindowShell extends Component {
   render() {
     return <div className="modal-window">
       <button onClick={this.toggleHidden.bind(this)} >
-        Click to show modal
+        Click to hide modal
       </button>
       {this.props.children}
     </div>;

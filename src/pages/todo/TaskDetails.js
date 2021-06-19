@@ -13,6 +13,7 @@ export default class TaskDetails extends Component {
       {this.props.task.title}
       {this.props.task.desription}
       {this.props.task.priority}
+      {this.props.task.dueDate}
       {this.props.task.createdAt}
       {this.props.task.updatedAt}
     </div>;

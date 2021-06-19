@@ -4,6 +4,7 @@ export class Task {
   description = '';
   isDone = false;
   priority = 1;
+  dueDate = Date.now();
   createdAt = Date.now();
   updatedAt = Date.now();
 }
