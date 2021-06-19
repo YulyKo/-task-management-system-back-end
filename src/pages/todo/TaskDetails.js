@@ -1,6 +1,11 @@
-import { Component } from "react";
+import React, { Component }  from 'react';
+import PropTypes from 'prop-types';
 
 export default class TaskDetails extends Component {
+  propTypes = {
+    task: PropTypes.object,
+  }
+
   render() {
     return <div>
       {this.props.task.title}

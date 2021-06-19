@@ -1,5 +1,5 @@
-import { Component } from "react";
-import tasks from "../../utils/tasks";
+import React, { Component }  from 'react';
+import tasks from '../../utils/tasks';
 import ModalWindowShell from './ModalWindowShell';
 import TaskListItem from './TaskListItem';
 import TaskForm from './TaskForm';
@@ -20,7 +20,7 @@ export class TasksListPage extends Component {
   }
 
   render() {
-    let btn_class = this.state.isHidden ? "blackButton" : "whiteButton";
+    let btn_class = this.state.isHidden ? 'blackButton' : 'whiteButton';
     return <div>
       <button className={btn_class} onClick={this.toggleHidden.bind(this)} >
         Click to show modal
@@ -34,6 +34,6 @@ export class TasksListPage extends Component {
       {tasks.map((task, index) => (
         <TaskListItem key={index} task={task} />
       ))}
-    </div>
+    </div>;
   }
 }

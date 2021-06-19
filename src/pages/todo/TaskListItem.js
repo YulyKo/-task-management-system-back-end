@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component }  from 'react';
 import tasks from "../../utils/tasks";
 import ModalWindowShell from "./ModalWindowShell";
 import TaskForm from "./TaskForm";

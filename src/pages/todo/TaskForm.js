@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component }  from 'react';
 import { Task } from "../../models/task.class";
 import { PRIORITIES } from "../../utils/priorities";
 import tasks from "../../utils/tasks";
