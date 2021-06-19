@@ -9,7 +9,7 @@ export default class TaskForm extends Component {
     return { 
       task: PropTypes.any,
       toggleHidden: PropTypes.func,
-    }; 
+    };
   }
 
   constructor(props) {
@@ -57,9 +57,9 @@ export default class TaskForm extends Component {
     console.log('http call here', tasks); // see local tasks
   }
 
-  setFieldValue(field, e){         
+  setFieldValue(field, e){
     let fields = this.state.task;
-    fields[field] = e.target.value;        
+    fields[field] = e.target.value;
     this.setState({fields});
   }
 

@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import TaskDetails from './TaskDetails';
 
 export default class TaskListItem extends Component {
-  static get propTypes() { 
-    return { 
+  static get propTypes() {
+    return {
       task: PropTypes.any, // type is Task, look models/task.class.js
-    }; 
+    };
   }
 
   constructor(props) {
