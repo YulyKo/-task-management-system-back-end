@@ -1,15 +1,15 @@
 import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities';
-import tasks from '../../utils/tasks';
 import PropTypes from 'prop-types';
+import { TASKS } from '../../utils/api_urls';
 
 export default class TaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,
       toggleHidden: PropTypes.func,
-    }; 
+    };
   }
 
   constructor(props) {
@@ -26,41 +26,65 @@ export default class TaskForm extends Component {
     if (this.props.task) {
       this.props.task.dueDate = this.formatDate(this.props.task.dueDate);
       this.setState({ task: this.props.task });
-    } else this.setState({ task: { dueDate: Date.now() } });
+    }
   }
 
   onSubmit(event) {
     event.preventDefault();
-    console.log(this.state.task.dueDate);
     // undefined because I dont set true value in this.handleValidation(event)
     if (this.handleValidation(event) === undefined) {
       this.props.task ? this.update() : this.create();
-      this.props.toggleHidden();
     }
   }
 
   create() {
-    // set task value
-    const task = this.compareTask();
-    // create data local
-    tasks.push(task);
-    // TODO add http calling here
-    console.log('http call here', tasks); // see local tasks
+    let task = this.state.task;
+    // set default data
+    task.dueDate = task.dueDate ? task.dueDate : Date.now();
+    task.priority = +task.priority;
+    this.sendTask(task);
   }
 
+  sendTask(task) {
+    // http post task here
+    fetch(TASKS, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(task),
+    })
+      .then(res => {
+        // add task to local storage(?)
+        this.props.toggleHidden();
+      })
+      .catch(error => console.log(error));
+  }
+    
   update() {
     // set task value
     const task = this.compareTask();
-    // update data local
-    tasks[task.id] = task;
-    // TODO add http calling here
-    console.log('http call here', tasks); // see local tasks
+    // TODO update data local
+    // http calling here
+    this.putTask(task);
   }
 
-  setFieldValue(field, e){         
+  putTask(task) {
+    fetch(`${TASKS}/${this.state.task.id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(task),
+    })
+      .then(res => {
+        // add task to local storage(?)
+        this.props.toggleHidden();
+      })
+      .catch(error => console.log(error));
+  }
+
+  setFieldValue(field, e){
     let fields = this.state.task;
-    fields[field] = e.target.value;        
+    fields[field] = e.target.value;
     this.setState({fields});
+    console.log(fields);
   }
 
   checkExistRequired(fieldName) {
@@ -106,7 +130,7 @@ export default class TaskForm extends Component {
   }
 
   render() {
-    return <form onSubmit={this.onSubmit.bind(this)}>
+    return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
         defaultValue={this.state.task.title}
@@ -136,7 +160,6 @@ export default class TaskForm extends Component {
           :
           <input
             type="date"
-            defaultValue={this.formatDate(Date.now())}
             onChange={this.setFieldValue.bind(this, 'dueDate')} />
       }
       <button type="submit">Add</button>

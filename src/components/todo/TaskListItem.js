@@ -1,15 +1,15 @@
 import React, { Component }  from 'react';
-import tasks from '../../utils/tasks';
 import ModalWindowShell from './ModalWindowShell';
 import TaskForm from './TaskForm';
 import PropTypes from 'prop-types';
 import TaskDetails from './TaskDetails';
+import { TASKS } from '../../utils/api_urls';
 
 export default class TaskListItem extends Component {
-  static get propTypes() { 
-    return { 
+  static get propTypes() {
+    return {
       task: PropTypes.any, // type is Task, look models/task.class.js
-    }; 
+    };
   }
 
   constructor(props) {
@@ -44,13 +44,24 @@ export default class TaskListItem extends Component {
 
   deleteTask() {
     const id = this.props.task.id;
-    for (let index = 0; index < tasks.length; index++) {
-      const task = tasks[index];
-      if (task.id === id) {
-        tasks.splice(index, 1);
-      }
-    }
-    console.log(tasks);
+    // remove from local
+    // for (let index = 0; index < tasks.length; index++) {
+    //   const task = tasks[index];
+    //   if (task.id === id) {
+    //     tasks.splice(index, 1);
+    //   }
+    // }
+    this.deleteInAPI(id);
+  }
+
+  deleteInAPI(id) {
+    fetch(`${TASKS}/${id}`, {
+      method: 'DELETE',
+    })
+      .then(res => {
+        // add task to local storage(?)
+      })
+      .catch(error => console.log(error));
   }
 
   render() {

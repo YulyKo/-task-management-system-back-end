@@ -1,10 +1,10 @@
 export class Task {
-  id = '';
+  // id = '';
   title = '';
   description = '';
-  isDone = false;
+  // isDone = false;
   priority = 1;
   dueDate = Date.now();
-  createdAt = Date.now();
-  updatedAt = Date.now();
+  // createdAt = Date.now();
+  // updatedAt = Date.now();
 }
