@@ -3,6 +3,7 @@ import tasks from '../../utils/tasks';
 import ModalWindowShell from './ModalWindowShell';
 import TaskForm from './TaskForm';
 import PropTypes from 'prop-types';
+import TaskDetails from './TaskDetails';
 
 export default class TaskListItem extends Component {
   static get propTypes() { 
@@ -14,13 +15,20 @@ export default class TaskListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHidden: true,
+      isFormHidden: true,
+      isTaskWindowHidden: true,
     };
   }
   
-  toggleHidden() {
+  toggleEditForm() {
     this.setState({
-      isHidden: !this.state.isHidden
+      isFormHidden: !this.state.isFormHidden
+    });
+  }
+
+  toggleTaskWindow() {
+    this.setState({
+      isTaskWindowHidden: !this.state.isTaskWindowHidden
     });
   }
 
@@ -49,12 +57,20 @@ export default class TaskListItem extends Component {
     return <div>
       <input type="checkbox" defaultChecked={this.props.task.isDone}
         onChange={this.handleTaskStatus.bind(this)} />
-      <p>{this.props.task.title}</p>
-      <button onClick={this.toggleHidden.bind(this)}>Edit - it is link</button>
+      <button onClick={this.toggleTaskWindow.bind(this)}>
+        <p>{this.props.task.title}</p>
+      </button>
       {
-        !this.state.isHidden && 
+        !this.state.isTaskWindowHidden &&
         <ModalWindowShell>
-          <TaskForm toggleHidden={this.toggleHidden.bind(this)} task={this.props.task}/>
+          <TaskDetails toggleHidden={this.toggleEditForm.bind(this)} task={this.props.task}/>
+        </ModalWindowShell>
+      }
+      <button onClick={this.toggleEditForm.bind(this)}>Edit - it is link</button>
+      {
+        !this.state.isFormHidden &&
+        <ModalWindowShell>
+          <TaskForm toggleHidden={this.toggleEditForm.bind(this)} task={this.props.task}/>
         </ModalWindowShell>
       }
       <button onClick={this.deleteTask.bind(this)}>Delete</button>
