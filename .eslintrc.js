@@ -16,7 +16,6 @@ module.exports = {
   'rules': {
     'comma-dangle': 0,
     'react/jsx-uses-vars': 1,
-    'no-unused-vars': 'warn',
     // 'no-console': 1,
     'no-unexpected-multiline': 'warn',
     'indent': ['error', 2],
@@ -24,7 +23,6 @@ module.exports = {
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
 
-    // override configuration set by extending "eslint:recommended"
     'no-empty': 'warn',
     'no-cond-assign': ['error', 'always'],
 

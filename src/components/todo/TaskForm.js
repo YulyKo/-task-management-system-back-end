@@ -16,17 +16,11 @@ export default class TaskForm extends Component {
     super(props);
     this.state = {
       defaultTask: new Task(),
-      priority: 1,
-      title: '',
-      description: '',
-      dueDate: Date.now(),
-      errors: [],
+      titleError: '',
+      descriptionError: '',
+      priorityError: '',
+      newTaskFields: {},
     };
-    this.handleChangeDueDate = this.handleChangeDueDate.bind(this);
-    this.handleChangePriority = this.handleChangePriority.bind(this);
-    this.handleChangeTitle = this.handleChangeTitle.bind(this);
-    this.handleChangeDescription = this.handleChangeDescription.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -36,81 +30,105 @@ export default class TaskForm extends Component {
     this.setState({ defaultTask: this.props.task ? this.props.task : new Task() });
   }
 
-  handleChangeTitle(event) {
-    this.setState({ title: event.target.value });
-  }
-
-  handleChangeDescription(event) {
-    this.setState({ description: event.target.value });
-  }
-
-  handleChangePriority(event) {
-    this.setState({ priority: event.target.value });
-  }
-
-  handleChangeDueDate(event) {
-    this.setState({ priority: event.target.value });
-  }
-
   handleSubmit(event) {
     event.preventDefault();
-    this.compareTask();
-    console.log('submited', tasks);
-    this.props.toggleHidden();
+    console.log(this.handleValidation(event));
+    if (this.handleValidation(event) === undefined) {
+      // undefined because I dont set true value in this.handleValidation(event)
+      this.checkDueDate();
+      // set task value
+      const task = this.compareTask();
+      // save data local
+      tasks.push(task);
+      console.log('http call here', tasks); // see local tasks
+      this.props.toggleHidden();
+    }
+  }
+
+  checkDueDate() {
+    let dueDateField = this.state.newTaskFields.dueDate;
+    dueDateField ? dueDateField =
+      Date.parse(dueDateField) :
+      dueDateField = Date.now();
+  }
+
+  handleChange(field, e){         
+    let fields = this.state.newTaskFields;
+    fields[field] = e.target.value;        
+    this.setState({fields});
+  }
+
+  checkExistRequired(fieldName) {
+    const errorsArray = fieldName + 'Error';
+    if(!this.state.newTaskFields[fieldName]) {
+      this.setState({ [errorsArray]: 'Cannot be empty' });
+      return false;
+    } else this.setState({ [errorsArray]: '' });
+  }
+
+  handleValidation() {
+    let formValidStatus = true;
+    const requiredFieldsNames = ['title', 'description', 'priority'];
+    requiredFieldsNames.forEach((fieldName) => {
+      formValidStatus = this.checkExistRequired(fieldName);
+    });
+    return formValidStatus;
   }
 
   formatDate(date) {
-    let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
 
-    if (month.length < 2) 
-      month = '0' + month;
-    if (day.length < 2) 
-      day = '0' + day;
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
 
-    console.log(date, [year, month, day].join('-'));
     return [year, month, day].join('-');
   }
 
   compareTask = () => {
     const newTask = new Task();
-    newTask.title = this.state.title ? this.state.title : this.state.defaultTask.title;
-    newTask.description = this.state.description ? this.state.description : this.state.defaultTask.description;
-    newTask.priority = this.state.priority ? this.state.priority : this.state.defaultTask.priority;
-    newTask.dueDate = this.state.dueDate ? this.state.dueDate : this.state.defaultTask.dueDate;
-    tasks.push(newTask);
+    const fieldsData = this.state.newTaskFields;
+    newTask.title = fieldsData.title ? fieldsData.title : this.state.defaultTask.title;
+    newTask.description = fieldsData.description ? fieldsData.description : this.state.defaultTask.description;
+    newTask.priority = fieldsData.priority ? fieldsData.priority : this.state.defaultTask.priority;
+    newTask.dueDate = fieldsData.dueDate ? fieldsData.dueDate : this.state.defaultTask.dueDate;
+    return newTask;
   }
 
   render() {
-    return <form onSubmit={this.handleSubmit}>
+    return <form onSubmit={this.handleSubmit.bind(this)}>
       <input
         type="text"
         defaultValue={this.state.defaultTask.title}
-        onChange={this.handleChangeTitle} />
+        onChange={this.handleChange.bind(this, 'title')} />
+      <span className="error">{this.state.titleError}</span>
 
       <textarea
         defaultValue={this.state.defaultTask.description}
-        onChange={this.handleChangeDescription}>
+        onChange={this.handleChange.bind(this, 'description')}>
       </textarea>
+      <span className="error">{this.state.descriptionError}</span>
 
-      <div onChange={this.handleChangePriority}>
+      <div onChange={this.handleChange.bind(this, 'priority')}>
         {PRIORITIES.map((data, index) =>
           <input key={index} type="radio" value={data} name="priority"/>
         )}
       </div>
+      <span className="error">{this.state.priorityError}</span>
+
       {
         this.props.task ?
           <input
             type="date"
             defaultValue={this.formatDate(this.props.task.dueDate)}
-            onChange={this.handleChangeDueDate} />
+            onChange={this.handleChange.bind(this, 'dueDate')} />
           :
           <input
             type="date"
             defaultValue={this.formatDate(Date.now())}
-            onChange={this.handleChangeDueDate} />
+            onChange={this.handleChange.bind(this, 'dueDate')} />
       }
       <button type="submit">Add</button>
     </form>;
