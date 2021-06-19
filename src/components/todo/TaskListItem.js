@@ -1,5 +1,4 @@
 import React, { Component }  from 'react';
-import tasks from '../../utils/tasks';
 import ModalWindowShell from './ModalWindowShell';
 import TaskForm from './TaskForm';
 import PropTypes from 'prop-types';
@@ -50,7 +49,6 @@ export default class TaskListItem extends Component {
         tasks.splice(index, 1);
       }
     }
-    console.log(tasks);
   }
 
   render() {

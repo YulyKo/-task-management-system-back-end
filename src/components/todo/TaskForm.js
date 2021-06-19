@@ -1,8 +1,8 @@
 import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities';
-import tasks from '../../utils/tasks';
 import PropTypes from 'prop-types';
+import { TASKS } from '../../utils/api_urls';
 
 export default class TaskForm extends Component {
   static get propTypes() { 
@@ -26,41 +26,59 @@ export default class TaskForm extends Component {
     if (this.props.task) {
       this.props.task.dueDate = this.formatDate(this.props.task.dueDate);
       this.setState({ task: this.props.task });
-    } else this.setState({ task: { dueDate: Date.now() } });
+    }
   }
 
   onSubmit(event) {
     event.preventDefault();
-    console.log(this.state.task.dueDate);
     // undefined because I dont set true value in this.handleValidation(event)
     if (this.handleValidation(event) === undefined) {
       this.props.task ? this.update() : this.create();
-      this.props.toggleHidden();
     }
   }
 
   create() {
     // set task value
-    const task = this.compareTask();
+    // const task = this.compareTask();
     // create data local
-    tasks.push(task);
+    // tasks.push(task);
     // TODO add http calling here
-    console.log('http call here', tasks); // see local tasks
+    let task = this.state.task;
+    task.dueDate = task.dueDate ? task.dueDate : Date.now();
+    task.priority = +task.priority;
+    this.sendTask(this.state.task);
+  }
+
+  sendTask(task) {
+    console.log(JSON.stringify(task));
+    const form = new FormData(document.getElementById('form'));
+    const ee = task;
+    console.log(ee);
+    fetch(TASKS, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(task),
+    })
+      .then(res => {
+        console.log(res);
+        // this.props.toggleHidden();
+      })
+      .catch(error => console.log(error));
   }
 
   update() {
     // set task value
     const task = this.compareTask();
     // update data local
-    tasks[task.id] = task;
+    // tasks[task.id] = task;
     // TODO add http calling here
-    console.log('http call here', tasks); // see local tasks
   }
 
   setFieldValue(field, e){
     let fields = this.state.task;
     fields[field] = e.target.value;
     this.setState({fields});
+    console.log(fields);
   }
 
   checkExistRequired(fieldName) {
@@ -106,7 +124,7 @@ export default class TaskForm extends Component {
   }
 
   render() {
-    return <form onSubmit={this.onSubmit.bind(this)}>
+    return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
         defaultValue={this.state.task.title}
@@ -136,7 +154,6 @@ export default class TaskForm extends Component {
           :
           <input
             type="date"
-            defaultValue={this.formatDate(Date.now())}
             onChange={this.setFieldValue.bind(this, 'dueDate')} />
       }
       <button type="submit">Add</button>

@@ -1,9 +1,7 @@
 import React, { Component }  from 'react';
-// import tasks from '../utils/tasks';
 import ModalWindowShell from '../components/todo/ModalWindowShell';
 import TaskListItem from '../components/todo/TaskListItem';
 import TaskForm from '../components/todo/TaskForm';
-import { Task } from '../models/task.class';
 
 export class TasksListPage extends Component {
   constructor(props) {
