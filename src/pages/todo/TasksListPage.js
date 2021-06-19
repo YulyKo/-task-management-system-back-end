@@ -28,7 +28,7 @@ export class TasksListPage extends Component {
       {
         !this.state.isHidden && 
         <ModalWindowShell>
-          <TaskForm onSubmit={this.toggleHidden.bind(this)}/>
+          <TaskForm toggleHidden={this.toggleHidden.bind(this)}/>
         </ModalWindowShell>
       }
       {tasks.map((task, index) => (

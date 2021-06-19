@@ -8,6 +8,7 @@ export default class TaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,
+      toggleHidden: PropTypes.func,
     }; 
   }
 
@@ -55,6 +56,7 @@ export default class TaskForm extends Component {
     event.preventDefault();
     this.compareTask();
     console.log('submited', tasks);
+    this.props.toggleHidden();
   }
 
   formatDate(date) {
