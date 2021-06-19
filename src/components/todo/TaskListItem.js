@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 export default class TaskListItem extends Component {
   static get propTypes() { 
     return { 
-      task: PropTypes.any,
+      task: PropTypes.any, // type is Task, look models/task.class.js
     }; 
   }
 
@@ -43,7 +43,7 @@ export default class TaskListItem extends Component {
       {
         !this.state.isHidden && 
         <ModalWindowShell>
-          <TaskForm task={this.props.task}/>
+          <TaskForm toggleHidden={this.toggleHidden.bind(this)} task={this.props.task}/>
         </ModalWindowShell>
       }
       <button onClick={this.deleteTask.bind(this)}>Delete</button>
