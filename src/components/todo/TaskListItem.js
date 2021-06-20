@@ -33,12 +33,23 @@ export default class TaskListItem extends Component {
   }
 
   handleTaskStatus() {
-    const id = this.props.task.id;
-    tasks.forEach((task) => {
-      if (task.id === id) {
-        tasks.isDone = true;
+    const task = this.props.task;
+    // tasks.forEach((task) => {
+    //   if (task.id === id) {
+    //     tasks.isDone = true;
+    //   }
+    // });
+    fetch(`${TASKS}/changeover/${task.id}`, {
+      method: 'PUT',
+      body: {
+        status: !task.isDone,
       }
-    });
+    })
+      .then(res => {
+        // add task to local storage(?)
+      })
+      .catch(error => console.log(error));
+
     // http post this.props.task.isDone = true
   }
 
