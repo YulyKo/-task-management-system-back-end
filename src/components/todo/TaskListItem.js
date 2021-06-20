@@ -41,9 +41,8 @@ export default class TaskListItem extends Component {
     // });
     fetch(`${TASKS}/changeover/${task.id}`, {
       method: 'PUT',
-      body: {
-        status: !task.isDone,
-      }
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ status: !task.isDone })
     })
       .then(res => {
         // add task to local storage(?)
