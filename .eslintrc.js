@@ -16,6 +16,7 @@ module.exports = {
     'plugin:react/recommended'
   ],
   'rules': {
+    'linebreak-style': 0,
     'comma-dangle': 0,
     'react/jsx-uses-vars': 1,
     'no-unexpected-multiline': 'warn',

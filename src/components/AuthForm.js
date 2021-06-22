@@ -24,10 +24,10 @@ export default class TaskForm extends Component {
 
   componentDidMount() {
     console.log(match.url);
-    // if (this.props.task) {
-    //   this.props.task.dueDate = this.formatDate(this.props.task.dueDate);
-    //   this.setState({ task: this.props.task });
-    // }
+    if (this.props.task) {
+      this.props.task.dueDate = this.formatDate(this.props.task.dueDate);
+      this.setState({ task: this.props.task });
+    }
   }
 
   onSubmit(event) {

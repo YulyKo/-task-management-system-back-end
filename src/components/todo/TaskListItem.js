@@ -19,7 +19,7 @@ export default class TaskListItem extends Component {
       isTaskWindowHidden: true,
     };
   }
-  
+
   toggleEditForm() {
     this.setState({
       isFormHidden: !this.state.isFormHidden

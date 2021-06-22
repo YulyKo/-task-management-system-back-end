@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
-import { AuthPage } from './pages/AuthPage';
+import { AuthPage } from './pages/auth/AuthPage';
 import { NotFound } from './pages/NotFound';
-import { TasksListPage } from './pages/TasksListPage';
+import { TasksListPage } from './pages/todo-list/TasksListPage';
 
 const Router = BrowserRouter;
 
