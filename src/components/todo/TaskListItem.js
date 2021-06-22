@@ -42,7 +42,6 @@ export default class TaskListItem extends Component {
     taskService.deleteFromAPI(id);
   }
 
-
   render() {
     return <div>
       <input type="checkbox" defaultChecked={this.props.task.isDone}
