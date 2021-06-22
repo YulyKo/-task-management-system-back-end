@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-import ModalWindowShell from '../../components/todo/ModalWindowShell';
+import ModalWindowShell from '../../components/ModalWindowShell';
 import TaskListItem from '../../components/todo/TaskListItem';
 import TaskForm from '../../components/todo/TaskForm';
 import {useLocation} from 'react-router-dom';

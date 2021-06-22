@@ -3,6 +3,7 @@ import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities';
 import PropTypes from 'prop-types';
 import { TASKS } from '../../utils/api_urls';
+import { taskService } from '../../services';
 
 export default class TaskForm extends Component {
   static get propTypes() { 
@@ -43,42 +44,15 @@ export default class TaskForm extends Component {
     // set default data
     task.dueDate = task.dueDate ? task.dueDate : Date.now();
     task.priority = +task.priority;
-    this.sendTask(task);
+    taskService.createTask(task);
   }
 
-  sendTask(task) {
-    // http post task here
-    fetch(TASKS, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(task),
-    })
-      .then(res => {
-        // add task to local storage(?)
-        this.props.toggleHidden();
-      })
-      .catch(error => console.log(error));
-  }
-    
   update() {
     // set task value
     const task = this.compareTask();
     // TODO update data local
     // http calling here
-    this.putTask(task);
-  }
-
-  putTask(task) {
-    fetch(`${TASKS}/${this.state.task.id}`, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(task),
-    })
-      .then(res => {
-        // add task to local storage(?)
-        this.props.toggleHidden();
-      })
-      .catch(error => console.log(error));
+    taskService.updateTask(task);
   }
 
   setFieldValue(field, e){
