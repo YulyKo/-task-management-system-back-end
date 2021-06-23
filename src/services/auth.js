@@ -9,3 +9,13 @@ export function registration(user) {
   })
     .then((res) => res.json());
 }
+
+export function login(user) {
+  console.log('sdfg');
+  return fetch(`${AUTH}/login`, {
+    method: 'POST',
+    headers: COMMON_HEADERS,
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json());
+}

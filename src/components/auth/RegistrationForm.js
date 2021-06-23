@@ -87,9 +87,7 @@ export default class RegistrationForm extends Component {
     let resMessage = validator.isEmpty(fieldValue) ?
       message : '';
     this.setState({ [errorsArrayName]: resMessage });
-    if (resMessage === '') {
-      return true;
-    }
+    if (resMessage === '') return true;
   }
 
   handleValidation() {
@@ -126,7 +124,11 @@ export default class RegistrationForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.handleValidation();
-    if (this.state.emailError === '' && this.state.passwordError === '') {
+    if (
+      this.state.emailError === '' &&
+      this.state.passwordError === '' &&
+      this.state.usernameError === '' &&
+      this.state.passwordConfirmError === '') {
       const newUser = this.compareUser();
       const smth = registration(newUser);
       smth.then(res => this.validUser(res));
@@ -160,12 +162,11 @@ export default class RegistrationForm extends Component {
         onChange={this.setFieldValue.bind(this, 'passwordConfirm')} />
       <span className="error">{this.state.passwordConfirmError}</span>
 
+      <span className="error">{this.state.userExistError}</span>
 
       <button type="submit">
         Registration
       </button>
-
-      <span className="error">{this.state.userExistError}</span>
     </form>;
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
-import User from '../../models/user.class';
 import validator from 'validator';
-import { passwordParams, messages } from '../../utils/auth.consts';
+import { login } from '../../services/auth';
+import { passwordParams, messages, TOKEN_NAME } from '../../utils/auth.consts';
 
 export default class LoginForm extends Component {
 
@@ -16,6 +16,18 @@ export default class LoginForm extends Component {
         password: '',
       },
     };
+  }
+  
+  setAccessToken(res) {
+    localStorage.setItem(TOKEN_NAME, res.accessToken);
+  }
+
+  validUser(res) {
+    console.log(res, res.message);
+    if (res.message) {
+      this.setState({ userExistError: res.message });
+    }
+    this.setAccessToken(res);
   }
 
   validPassword() {
@@ -58,7 +70,7 @@ export default class LoginForm extends Component {
         case 'password':
           this.validPassword();
           break;
-        
+
         default:
           break;
         }
@@ -71,8 +83,8 @@ export default class LoginForm extends Component {
     this.handleValidation();
     if (this.state.emailError === '' && this.state.passwordError === '') {
       const user = this.state.user;
-      // send user to API
-      console.log(user);
+      const smth = login(user);
+      smth.then(res => this.validUser(res));
     }
   }
 
@@ -89,6 +101,8 @@ export default class LoginForm extends Component {
         placeholder="password"
         onChange={this.setFieldValue.bind(this, 'password')} />
       <span className="error">{this.state.passwordError}</span>
+
+      <span className="error">{this.state.userExistError}</span>
 
       <button type="submit">
         Login
