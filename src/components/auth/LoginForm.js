@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import User from '../../models/user.class';
 import validator from 'validator';
+import { passwordParams } from '../../utils/auth.consts';
 
 export default class LoginForm extends Component {
 
@@ -22,7 +23,6 @@ export default class LoginForm extends Component {
     // TODO replace all messagess to const in utils
     const message = `Password is not correct.
       It must have minimum 8 letters, minimum one uppercase and one lovercase letter`;
-    const passwordParams = { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 0, minSymbols: 0, returnScore: false, pointsPerUnique: 0, pointsPerRepeat: 0.5, pointsForContainingLower: 0, pointsForContainingUpper: 0, pointsForContainingNumber: 0, pointsForContainingSymbol: 0 }; // move it to const
     validator.isStrongPassword(password, passwordParams) ?
       this.setState({ passwordError: '' }) :
       this.setState({ passwordError: message });
