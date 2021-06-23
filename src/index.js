@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
-import { AuthPage } from './pages/AuthPage';
 import { NotFound } from './pages/NotFound';
-import { TasksListPage } from './pages/TasksListPage';
+import { TasksListPage } from './pages/todo-list/TasksListPage';
+import { RegistrationPage } from './pages/auth/RegistrationPage';
+import { LoginPage } from './pages/auth/LoginPage';
 
 const Router = BrowserRouter;
 
@@ -14,7 +15,8 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/" component={ HomePage } />
-        <Route path="/auth" component={ AuthPage } />
+        <Route path="/registration" component={ RegistrationPage } />
+        <Route path="/login" component={ LoginPage } />
         <Route path="/todo-list" component={ TasksListPage } />
         <Route component={ NotFound } />
       </Switch>

@@ -1,9 +1,9 @@
 import React, { Component }  from 'react';
-import ModalWindowShell from './ModalWindowShell';
+import ModalWindowShell from '../ModalWindowShell';
 import TaskForm from './TaskForm';
 import PropTypes from 'prop-types';
 import TaskDetails from './TaskDetails';
-import { TASKS } from '../../utils/api_urls';
+import { taskService } from '../../services';
 
 export default class TaskListItem extends Component {
   static get propTypes() {
@@ -19,7 +19,7 @@ export default class TaskListItem extends Component {
       isTaskWindowHidden: true,
     };
   }
-  
+
   toggleEditForm() {
     this.setState({
       isFormHidden: !this.state.isFormHidden
@@ -33,45 +33,13 @@ export default class TaskListItem extends Component {
   }
 
   handleTaskStatus() {
-    const task = this.props.task;
-    // tasks.forEach((task) => {
-    //   if (task.id === id) {
-    //     tasks.isDone = true;
-    //   }
-    // });
-    fetch(`${TASKS}/changeover/${task.id}`, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ status: !task.isDone })
-    })
-      .then(res => {
-        // add task to local storage(?)
-      })
-      .catch(error => console.log(error));
-
-    // http post this.props.task.isDone = true
+    const taskId = this.props.task.id;
+    taskService.changeoverTaskStatus(taskId);
   }
 
   deleteTask() {
     const id = this.props.task.id;
-    // remove from local
-    // for (let index = 0; index < tasks.length; index++) {
-    //   const task = tasks[index];
-    //   if (task.id === id) {
-    //     tasks.splice(index, 1);
-    //   }
-    // }
-    this.deleteInAPI(id);
-  }
-
-  deleteInAPI(id) {
-    fetch(`${TASKS}/${id}`, {
-      method: 'DELETE',
-    })
-      .then(res => {
-        // add task to local storage(?)
-      })
-      .catch(error => console.log(error));
+    taskService.deleteFromAPI(id);
   }
 
   render() {

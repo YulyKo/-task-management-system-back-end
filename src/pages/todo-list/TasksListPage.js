@@ -1,7 +1,8 @@
 import React, { Component }  from 'react';
-import ModalWindowShell from '../components/todo/ModalWindowShell';
-import TaskListItem from '../components/todo/TaskListItem';
-import TaskForm from '../components/todo/TaskForm';
+import ModalWindowShell from '../../components/ModalWindowShell';
+import TaskListItem from '../../components/todo/TaskListItem';
+import TaskForm from '../../components/todo/TaskForm';
+import {useLocation} from 'react-router-dom';
 
 export class TasksListPage extends Component {
   constructor(props) {
@@ -13,25 +14,25 @@ export class TasksListPage extends Component {
   }
 
   componentDidMount() {
-    fetch('https://tms-back-end.herokuapp.com/api/tasks')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            tasks: result,
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
+    // fetch('https://tms-back-end.herokuapp.com/api/tasks')
+    //   .then(res => res.json())
+    //   .then(
+    //     (result) => {
+    //       this.setState({
+    //         isLoaded: true,
+    //         tasks: result,
+    //       });
+    //     },
+    //     // Note: it's important to handle errors here
+    //     // instead of a catch() block so that we don't swallow
+    //     // exceptions from actual bugs in components.
+    //     (error) => {
+    //       this.setState({
+    //         isLoaded: true,
+    //         error
+    //       });
+    //     }
+    // );
   }
 
   toggleHidden() {

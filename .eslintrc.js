@@ -16,6 +16,7 @@ module.exports = {
     'plugin:react/recommended'
   ],
   'rules': {
+    'linebreak-style': 0,
     'comma-dangle': 0,
     'react/jsx-uses-vars': 1,
     'no-unexpected-multiline': 'warn',
@@ -23,7 +24,8 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
-
+    'no-irregular-whitespace': 'off',
+   
     'no-empty': 'warn',
     'no-cond-assign': ['error', 'always'],
 
