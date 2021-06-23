@@ -2,17 +2,21 @@ import React, { Component }  from 'react';
 import validator from 'validator';
 import { messages } from '../../utils/auth.consts';
 
-export default class LoginForm extends Component {
+export default class RegistrationForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      usernameError: '',
       emailError: '',
       passwordError: '',
+      passwordConfirmError: '',
       userExistError: '',
       user: {
         email: '',
         password: '',
+        username: '',
+        passwordConfirm: '',
       },
     };
   }
@@ -50,10 +54,9 @@ export default class LoginForm extends Component {
   }
 
   handleValidation() {
-    let isRequaried = true;
     for (const fieldName in this.state.user) {
-      isRequaried = this.checkExistRequired(fieldName);
-      if (isRequaried) {
+      let isInputted = this.checkExistRequired(fieldName);
+      if (isInputted) {
         switch (fieldName) {
         case 'email':
           this.validEmail();
@@ -83,6 +86,12 @@ export default class LoginForm extends Component {
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
+        placeholder="username"
+        onChange={this.setFieldValue.bind(this, 'username')} />
+      <span className="error">{this.state.usernameError}</span>
+
+      <input
+        type="text"
         placeholder="email"
         onChange={this.setFieldValue.bind(this, 'email')} />
       <span className="error">{this.state.emailError}</span>
@@ -92,6 +101,12 @@ export default class LoginForm extends Component {
         placeholder="password"
         onChange={this.setFieldValue.bind(this, 'password')} />
       <span className="error">{this.state.passwordError}</span>
+
+      <input
+        type="passwordConfirm"
+        placeholder="passwordConfirm"
+        onChange={this.setFieldValue.bind(this, 'passwordConfirm')} />
+      <span className="error">{this.state.passwordConfirmError}</span>
 
       <button type="submit">
         Login

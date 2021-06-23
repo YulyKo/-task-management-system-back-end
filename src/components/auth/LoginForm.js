@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import User from '../../models/user.class';
 import validator from 'validator';
-import { passwordParams } from '../../utils/auth.consts';
+import { passwordParams, messages } from '../../utils/auth.consts';
 
 export default class LoginForm extends Component {
 
@@ -20,20 +20,16 @@ export default class LoginForm extends Component {
 
   validPassword() {
     const password = this.state.user.password;
-    // TODO replace all messagess to const in utils
-    const message = `Password is not correct.
-      It must have minimum 8 letters, minimum one uppercase and one lovercase letter`;
     validator.isStrongPassword(password, passwordParams) ?
       this.setState({ passwordError: '' }) :
-      this.setState({ passwordError: message });
+      this.setState({ passwordError: messages.INVALID_PASSWORD });
   }
 
   validEmail() {
     const email = this.state.user.email;
-    const message = 'Email is not correct';
     validator.isEmail(email) ?
       this.setState({ emailError: '' }) :
-      this.setState({ emailError: message });
+      this.setState({ emailError: messages.INVALID_EMAIL });
   }
 
   setFieldValue(field, e){
@@ -45,20 +41,16 @@ export default class LoginForm extends Component {
   checkExistRequired(fieldName) {
     const errorsArrayName = fieldName + 'Error';
     const fieldValue = this.state.user[fieldName];
-    const message = 'Cannot be empty';
     let resMessage = validator.isEmpty(fieldValue) ?
-      message : '';
+      messages.REQUARIED : '';
     this.setState({ [errorsArrayName]: resMessage });
-    if (resMessage === '') {
-      return true;
-    }
+    if (resMessage === '') return true;
   }
 
   handleValidation() {
-    let isRequaried = true;
     for (const fieldName in this.state.user) {
-      isRequaried = this.checkExistRequired(fieldName);
-      if (isRequaried) {
+      let isInputted = this.checkExistRequired(fieldName);
+      if (isInputted) {
         switch (fieldName) {
         case 'email':
           this.validEmail();
@@ -72,15 +64,16 @@ export default class LoginForm extends Component {
         }
       }
     }
-    return this.state.emailError === '' && this.state.passwordError === '';
   }
 
   onSubmit(event) {
     event.preventDefault();
     this.handleValidation();
-    const user = this.state.user;
-    // send user to API
-    console.log(user);
+    if (this.state.emailError === '' && this.state.passwordError === '') {
+      const user = this.state.user;
+      // send user to API
+      console.log(user);
+    }
   }
 
   render() {
