@@ -1,15 +1,6 @@
 import React, { Component }  from 'react';
-import { Task } from '../../models/task.class';
-import { PRIORITIES } from '../../utils/priorities';
-import PropTypes from 'prop-types';
 
-export default class TaskForm extends Component {
-  static get propTypes() { 
-    return { 
-      task: PropTypes.any,
-      toggleHidden: PropTypes.func,
-    };
-  }
+export default class AuthForm extends Component {
 
   constructor(props) {
     super(props);
@@ -18,18 +9,21 @@ export default class TaskForm extends Component {
       descriptionError: '',
       priorityError: '',
       user: {},
+      formType: '',
     };
   }
 
   componentDidMount() {
-    console.log(match.url);
+    const pathname = window.location.pathname;
+    console.log(pathname.substring(1));
+    this.setState({ formType: pathname.substring(1)});
   }
 
   onSubmit(event) {
     event.preventDefault();
-    // undefined because I dont set true value in this.handleValidation(event)
+    // undefined because I don't set true value in this.handleValidation(event)
     if (this.handleValidation(event) === undefined) {
-      this.props.task ? this.update() : this.create();
+      this.state.formType !== 'login' ? this.update() : this.create();
     }
   }
 
@@ -70,10 +64,11 @@ export default class TaskForm extends Component {
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       {
         // show input for write username
-        this.props.task ?
+        this.state.formType === 'registration' ?
           <div>
             <input
               type="text"
+              placeholder="username"
               onChange={this.setFieldValue.bind(this, 'username')} 
               required/>
             <span className="error">{this.state.usernameError}</span>
@@ -84,22 +79,25 @@ export default class TaskForm extends Component {
 
       <input
         type="text"
+        placeholder="email"
         onChange={this.setFieldValue.bind(this, 'email')}
         required/>
       <span className="error">{this.state.emailError}</span>
 
       <input
         type="password"
+        placeholder="email"
         onChange={this.setFieldValue.bind(this, 'password')}
         required/>
       <span className="error">{this.state.passordError}</span>
 
       {
         // show input for write confirm password
-        this.props.task ?
+        this.state.formType === 'registration' ?
           <div>
             <input
               type="password"
+              placeholder="repeat password"
               onChange={this.setFieldValue.bind(this, 'confirmPassword')}
               required/>
             <span>{this.state.confirmPasswordError}</span>
@@ -107,7 +105,12 @@ export default class TaskForm extends Component {
           :
           <span></span>
       }
-      <button type="submit">Add</button>
+      <button type="submit">
+        {
+          this.state.formType === 'registration' ?
+            'Create account' : 'Login'
+        }
+      </button>
     </form>;
   }
 }

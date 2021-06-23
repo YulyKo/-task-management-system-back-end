@@ -2,7 +2,6 @@ import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities';
 import PropTypes from 'prop-types';
-import { TASKS } from '../../utils/api_urls';
 import { taskService } from '../../services';
 
 export default class TaskForm extends Component {
