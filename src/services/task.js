@@ -1,10 +1,11 @@
 
 import { TASKS } from '../utils/api_urls';
+import { COMMON_HEADERS } from '../utils/common_headers';
 
 export function createTask(task) {
   fetch(TASKS, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: COMMON_HEADERS,
     body: JSON.stringify(task),
   })
     .then(res => {
@@ -17,7 +18,7 @@ export function createTask(task) {
 export function changeoverTaskStatus(taskId) {
   fetch(`${TASKS}/changeover/${taskId}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: COMMON_HEADERS,
     body: JSON.stringify({ status: !task.isDone })
   })
     .then(res => {
@@ -29,7 +30,7 @@ export function changeoverTaskStatus(taskId) {
 export function updateTask(task) {
   fetch(`${TASKS}/${this.state.task.id}`, {
     method: 'PUT',
-    headers: {'Content-Type': 'application/json'},
+    headers: COMMON_HEADERS,
     body: JSON.stringify(task),
   })
     .then(res => {

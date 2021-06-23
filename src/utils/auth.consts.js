@@ -13,9 +13,16 @@ export const passwordParams = {
   pointsForContainingSymbol: 0
 };
 
+export const locate = ['en-US'];
+
 export const messages = {
   INVALID_PASSWORD: `Password is not correct.
   It must have minimum 8 letters, minimum one uppercase and one lovercase letter`,
   INVALID_EMAIL: 'Email is not correct',
+  INVALID_USERNAME: 'Username must have only letters and numbers',
   REQUARIED: 'Cannot be empty',
+  NOT_EQUALS_PASSWRODS: 'Passwords not equals',
+  USER_EXIST: 'User exist with this email',
 };
+
+export const TOKEN_NAME = 'tms-access-token';

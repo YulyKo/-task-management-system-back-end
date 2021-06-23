@@ -1,6 +1,8 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
-import { messages } from '../../utils/auth.consts';
+import User from '../../models/user.class';
+import { registration } from '../../services/auth';
+import { passwordParams, messages, locate as locales, TOKEN_NAME } from '../../utils/auth.consts';
 
 export default class RegistrationForm extends Component {
 
@@ -13,12 +15,55 @@ export default class RegistrationForm extends Component {
       passwordConfirmError: '',
       userExistError: '',
       user: {
-        email: '',
-        password: '',
-        username: '',
-        passwordConfirm: '',
+        email: 'test@mail.com',
+        password: '1qASDFGHJKL',
+        username: 'sdfghj',
+        passwordConfirm: '1qASDFGHJKL',
       },
     };
+  }
+
+  setFieldValue(field, e){
+    let fields = this.state.user;
+    fields[field] = e.target.value;
+    this.setState({fields});
+  }
+
+  compareUser() {
+    const user = new User();
+    user.email = this.state.user.email;
+    user.password = this.state.user.password;
+    user.username = this.state.user.username;
+    console.log(user);
+    return user;
+  }
+
+  setAccessToken(res) {
+    localStorage.setItem(TOKEN_NAME, res.accessToken);
+  }
+
+  validUser(res) {
+    const key = Object.keys(res)[0];
+    console.log(key, res.message);
+    if (key === 'message') {
+      this.setState({ userExistError: messages.USER_EXIST });
+    }
+    this.setAccessToken(res);
+  }
+
+  validUsername() {
+    const username = this.state.user.username;
+    validator.isAlphanumeric(username, locales, { ignore: ' -' }) ?
+      this.setState({ usernameError: '' }) :
+      this.setState({ usernameError: messages.INVALID_USERNAME });
+  }
+
+  validPasswordConfirm() {
+    const password = this.state.user.password;
+    const passwordConfirm = this.state.user.passwordConfirm;
+    validator.equals(password, passwordConfirm) ?
+      this.setState({ passwordConfirmError: '' }) :
+      this.setState({ passwordConfirmError: messages.NOT_EQUALS_PASSWRODS });
   }
 
   validPassword() {
@@ -35,12 +80,6 @@ export default class RegistrationForm extends Component {
       this.setState({ emailError: messages.INVALID_EMAIL });
   }
 
-  setFieldValue(field, e){
-    let fields = this.state.user;
-    fields[field] = e.target.value;
-    this.setState({fields});
-  }
-
   checkExistRequired(fieldName) {
     const errorsArrayName = fieldName + 'Error';
     const fieldValue = this.state.user[fieldName];
@@ -55,14 +94,26 @@ export default class RegistrationForm extends Component {
 
   handleValidation() {
     for (const fieldName in this.state.user) {
+      // check requiered
       let isInputted = this.checkExistRequired(fieldName);
+
       if (isInputted) {
+        // check by rules
         switch (fieldName) {
         case 'email':
           this.validEmail();
           break;
+
         case 'password':
           this.validPassword();
+          break;
+        
+        case 'passwordConfirm':
+          this.validPasswordConfirm();
+          break;
+
+        case 'username':
+          this.validUsername();
           break;
         
         default:
@@ -76,10 +127,11 @@ export default class RegistrationForm extends Component {
     event.preventDefault();
     this.handleValidation();
     if (this.state.emailError === '' && this.state.passwordError === '') {
-      const user = this.state.user;
-      // send user to API
-      console.log(user);
+      const newUser = this.compareUser();
+      const smth = registration(newUser);
+      smth.then(res => this.validUser(res));
     }
+    console.log(this.state.userExistError);
   }
 
   render() {
@@ -103,14 +155,17 @@ export default class RegistrationForm extends Component {
       <span className="error">{this.state.passwordError}</span>
 
       <input
-        type="passwordConfirm"
+        type="password"
         placeholder="passwordConfirm"
         onChange={this.setFieldValue.bind(this, 'passwordConfirm')} />
       <span className="error">{this.state.passwordConfirmError}</span>
 
+
       <button type="submit">
-        Login
+        Registration
       </button>
+
+      <span className="error">{this.state.userExistError}</span>
     </form>;
   }
 }
