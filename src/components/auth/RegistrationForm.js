@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
-import { registration } from '../../services/auth';
+import { authService } from '../../services';
 import { passwordParams, messages, locate as locales, TOKEN_NAME } from '../../utils/auth.consts';
 
 export default class RegistrationForm extends Component {
@@ -39,12 +39,13 @@ export default class RegistrationForm extends Component {
   }
 
   setAccessToken(res) {
-    localStorage.setItem(TOKEN_NAME, res.accessToken);
+    const token = res.accessToken;
+    localStorage.setItem(TOKEN_NAME, token);
+    console.log(localStorage.getItem(TOKEN_NAME));
   }
 
   validUser(res) {
     const key = Object.keys(res)[0];
-    console.log(key, res.message);
     if (key === 'message') {
       this.setState({ userExistError: messages.USER_EXIST });
     }
@@ -53,7 +54,7 @@ export default class RegistrationForm extends Component {
 
   validUsername() {
     const username = this.state.user.username;
-    validator.isAlphanumeric(username, locales, { ignore: ' -' }) ?
+    validator.isAlphanumeric(username, locales, { ignore: '^[a-zA-Z а-яА-Я\-]+$' }) ?
       this.setState({ usernameError: '' }) :
       this.setState({ usernameError: messages.INVALID_USERNAME });
   }
@@ -130,7 +131,7 @@ export default class RegistrationForm extends Component {
       this.state.usernameError === '' &&
       this.state.passwordConfirmError === '') {
       const newUser = this.compareUser();
-      const smth = registration(newUser);
+      const smth = authService.registration(newUser);
       smth.then(res => this.validUser(res));
     }
     console.log(this.state.userExistError);

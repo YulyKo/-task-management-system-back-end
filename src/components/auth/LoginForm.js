@@ -1,6 +1,6 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
-import { login } from '../../services/auth';
+import { authService } from '../../services';
 import { passwordParams, messages, TOKEN_NAME } from '../../utils/auth.consts';
 
 export default class LoginForm extends Component {
@@ -83,7 +83,7 @@ export default class LoginForm extends Component {
     this.handleValidation();
     if (this.state.emailError === '' && this.state.passwordError === '') {
       const user = this.state.user;
-      const smth = login(user);
+      const smth = authService.login(user);
       smth.then(res => this.validUser(res));
     }
   }
