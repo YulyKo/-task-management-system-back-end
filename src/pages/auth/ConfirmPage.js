@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { authService } from '../../services';
 import { TOKEN_NAME } from '../../utils/auth.consts';
 
 export class ConfirmPage extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -12,8 +13,10 @@ export class ConfirmPage extends React.Component {
   }
 
   componentDidMount() {
-    const token = localStorage.getItem(TOKEN_NAME);
-    this.setState({ token: token });
+    const code = window.location.pathname.replace('/confirm/', '');
+    if (code) {
+      authService.confirmUser(code); 
+    }
   }
 
   render() {
@@ -25,7 +28,6 @@ export class ConfirmPage extends React.Component {
           <Link to="/login">go to login</Link> :
           <Link to="/todo-list">go to tasks</Link>
       }
-      
     </main>;
   }
 }
