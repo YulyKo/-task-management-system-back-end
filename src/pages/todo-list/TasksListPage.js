@@ -3,6 +3,9 @@ import ModalWindowShell from '../../components/ModalWindowShell';
 import TaskListItem from '../../components/todo/TaskListItem';
 import TaskForm from '../../components/todo/TaskForm';
 import {useLocation} from 'react-router-dom';
+import { TASKS } from '../../utils/api_urls';
+import { TASK_HEADERS } from '../../utils/common_headers';
+import { OWNER_TOKEN_NAME } from '../../utils/auth.consts';
 
 export class TasksListPage extends Component {
   constructor(props) {
@@ -14,25 +17,29 @@ export class TasksListPage extends Component {
   }
 
   componentDidMount() {
-    // fetch('https://tms-back-end.herokuapp.com/api/tasks')
-    //   .then(res => res.json())
-    //   .then(
-    //     (result) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         tasks: result,
-    //       });
-    //     },
-    //     // Note: it's important to handle errors here
-    //     // instead of a catch() block so that we don't swallow
-    //     // exceptions from actual bugs in components.
-    //     (error) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         error
-    //       });
-    //     }
-    // );
+    const ownerEmail = localStorage.getItem(OWNER_TOKEN_NAME);
+    fetch(TASKS, {
+      method: 'GET',
+      headers: TASK_HEADERS,
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            tasks: result,
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      );
   }
 
   toggleHidden() {

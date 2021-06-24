@@ -25,3 +25,4 @@ export const messages = {
 };
 
 export const TOKEN_NAME = 'tms-access-token';
+export const OWNER_TOKEN_NAME = 'tms-owner';

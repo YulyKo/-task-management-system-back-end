@@ -1,11 +1,11 @@
 
 import { TASKS } from '../utils/api_urls';
-import { COMMON_HEADERS } from '../utils/common_headers';
+import { TASK_HEADERS } from '../utils/common_headers';
 
-export function createTask(task, ownerEmail) {
+export function createTask(task) {
   fetch(TASKS, {
     method: 'POST',
-    headers: COMMON_HEADERS(ownerEmail),
+    headers: TASK_HEADERS,
     body: JSON.stringify(task),
   })
     .then(res => {
@@ -15,10 +15,10 @@ export function createTask(task, ownerEmail) {
     .catch(error => console.log(error));
 }
 
-export function changeoverTaskStatus(taskId, ownerEmail) {
+export function changeoverTaskStatus(taskId) {
   fetch(`${TASKS}/changeover/${taskId}`, {
     method: 'PUT',
-    headers: COMMON_HEADERS(ownerEmail),
+    headers: TASK_HEADERS,
     body: JSON.stringify({ status: !task.isDone })
   })
     .then(res => {
@@ -27,10 +27,10 @@ export function changeoverTaskStatus(taskId, ownerEmail) {
     .catch(error => console.log(error));      
 }
 
-export function updateTask(task, ownerEmail) {
+export function updateTask(task) {
   fetch(`${TASKS}/${this.state.task.id}`, {
     method: 'PUT',
-    headers: COMMON_HEADERS(ownerEmail),
+    headers: TASK_HEADERS,
     body: JSON.stringify(task),
   })
     .then(res => {
@@ -40,11 +40,11 @@ export function updateTask(task, ownerEmail) {
     .catch(error => console.log(error));
 }
 
-export function deleteFromAPI(id, ownerEmail) {
+export function deleteFromAPI(id) {
   fetch(`${TASKS}/${id}`,
     {
       method: 'DELETE',
-      headers: COMMON_HEADERS(ownerEmail),
+      headers: TASK_HEADERS,
     })
     .then(res => {
       // add task to local storage(?)

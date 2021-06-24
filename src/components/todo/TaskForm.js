@@ -100,6 +100,7 @@ export default class TaskForm extends Component {
     newTask.description = fieldsData.description;
     newTask.priority = fieldsData.priority;
     newTask.dueDate = fieldsData.dueDate;
+    newTask.ownerEmail = localStorage.getItem(tms-owner);
     return newTask;
   }
 

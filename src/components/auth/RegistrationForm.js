@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
 import { authService } from '../../services';
-import { passwordParams, messages, locate as locales, TOKEN_NAME } from '../../utils/auth.consts';
+import { passwordParams, messages, locate as locales, TOKEN_NAME, OWNER_TOKEN_NAME } from '../../utils/auth.consts';
 
 export default class RegistrationForm extends Component {
 
@@ -48,6 +48,7 @@ export default class RegistrationForm extends Component {
     const key = Object.keys(res)[0];
     if (key === 'message') {
       this.setState({ userExistError: messages.USER_EXIST });
+      localStorage.setItem(OWNER_TOKEN_NAME, this.state.user.email);
     }
     this.setAccessToken(res);
   }
@@ -132,7 +133,9 @@ export default class RegistrationForm extends Component {
       this.state.passwordConfirmError === '') {
       const newUser = this.compareUser();
       const smth = authService.registration(newUser);
-      smth.then(res => this.validUser(res));
+      smth.then(res => {
+        this.validUser(res);
+      });
     }
     console.log(this.state.userExistError);
   }
