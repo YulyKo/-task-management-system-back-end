@@ -1,12 +1,11 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
+import { CONFIRM } from '../../navigation/paths.const';
 import { authService } from '../../services';
-import { Redirect } from 'react-router';
-import { passwordParams, messages, locate as locales, TOKEN_NAME, OWNER_TOKEN_NAME } from '../../utils/auth.const';
+import { passwordParams, messages, locate as locales, OWNER_TOKEN_NAME } from '../../utils/auth.const';
 
 export default class RegistrationForm extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -40,13 +39,13 @@ export default class RegistrationForm extends Component {
   }
 
   redirect() {
-    window.location.pathname = '/confirm/go-to-email';
+    window.location.pathname = CONFIRM;
   }
 
   setAccessToken(res) {
     const token = res.accessToken;
-    localStorage.setItem(TOKEN_NAME, token);
-    console.log(localStorage.getItem(TOKEN_NAME));
+    authService.setConfirmedStatus(token);
+    console.log(authService.getConfirmedStatus());
   }
 
   validUser(res) {
@@ -54,7 +53,7 @@ export default class RegistrationForm extends Component {
     if (key === 'message') {
       this.setState({ userExistError: messages.USER_EXIST });
     }
-    localStorage.setItem(OWNER_TOKEN_NAME, this.state.user.email);
+    authService.setOwnerKey(this.state.user.email);
     this.setAccessToken(res);
     this.redirect();
   }

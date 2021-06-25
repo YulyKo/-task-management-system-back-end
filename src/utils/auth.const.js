@@ -24,6 +24,6 @@ export const messages = {
   NOT_EQUALS_PASSWRODS: 'Passwords not equals',
 };
 
-export const TOKEN_NAME = 'tms-access-token';
+export const ACCESS_TOKEN = 'tms-access-token';
 export const OWNER_TOKEN_NAME = 'tms-owner';
-export const CONFIRMED_STATUS = 'confirmed';
+export const CONFIRMED_STATUS = 'tms-confirmed';

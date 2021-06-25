@@ -5,7 +5,7 @@ import { RegistrationPage } from '../pages/auth/RegistrationPage';
 import { RootPage } from '../pages/RootPage';
 import { NotFound } from '../pages/NotFound';
 import { HomePage } from '../pages/todo-list/HomePage';
-import { HOME_PAGE, LOGIN, REGISTRATION, ROOT_PAGE } from './paths.const';
+import { CONFIRM, CONFIRM_BY_EMAIL, HOME_PAGE, LOGIN, REGISTRATION, ROOT_PAGE } from './paths.const';
 import PrivateRoute from './PrivateRoute';
 import { NotConfirmedPage } from '../pages/auth/Confirm/NotConfirmedPage';
 import { ConfirmedPage } from '../pages/auth/Confirm/ConfirmedPage';
@@ -16,8 +16,8 @@ export const RouterConfig = () =>
     <Route exact path={ROOT_PAGE} component={ RootPage } />
     <Route exact path={REGISTRATION} component={ RegistrationPage } />
     <Route exact path={LOGIN} component={ LoginPage } />
-    <Route path="/confirm" component={ NotConfirmedPage } />
-    <Route path="/confirm/:code" component={ ConfirmedPage } />
+    <Route path={CONFIRM} component={ NotConfirmedPage } />
+    <Route path={CONFIRM_BY_EMAIL} component={ ConfirmedPage } />
 
     {/* private auth route to page with tasks */}
     <PrivateRoute path={HOME_PAGE}>
