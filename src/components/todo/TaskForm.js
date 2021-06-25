@@ -2,13 +2,13 @@ import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities.const';
 import PropTypes from 'prop-types';
-import { taskService } from '../../services';
+import { authService, taskService } from '../../services';
 
 export default class TaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,
-      toggleHidden: PropTypes.func,
+      // toggleHidden: PropTypes.func,
     };
   }
 
@@ -32,9 +32,9 @@ export default class TaskForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     // undefined because I dont set true value in this.handleValidation(event)
-    if (this.handleValidation(event) === undefined) {
-      this.props.task ? this.update() : this.create();
-    }
+    // if (this.handleValidation(event) === undefined) {
+    this.props.task ? this.update() : this.create();
+    // }
   }
 
   create() {
@@ -42,6 +42,8 @@ export default class TaskForm extends Component {
     // set default data
     task.dueDate = task.dueDate ? task.dueDate : Date.now();
     task.priority = +task.priority;
+    task.ownerEmail = authService.getOwnerKey();
+
     taskService.createTask(task);
   }
 
@@ -57,7 +59,6 @@ export default class TaskForm extends Component {
     let fields = this.state.task;
     fields[field] = e.target.value;
     this.setState({fields});
-    console.log(fields);
   }
 
   checkExistRequired(fieldName) {
@@ -95,11 +96,12 @@ export default class TaskForm extends Component {
   compareTask = () => {
     const newTask = new Task();
     const fieldsData = this.state.task;
+    newTask.id = this.state.task.id;
     newTask.title = fieldsData.title;
     newTask.description = fieldsData.description;
     newTask.priority = fieldsData.priority;
     newTask.dueDate = fieldsData.dueDate;
-    newTask.ownerEmail = localStorage.getItem(tms-owner);
+    newTask.ownerEmail = authService.getOwnerKey();
     return newTask;
   }
 

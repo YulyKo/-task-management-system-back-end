@@ -10,7 +10,8 @@ export function createTask(task) {
   })
     .then(res => {
       // add task to local storage(?)
-      this.props.toggleHidden();
+      console.log(res);
+      // this.props.toggleHidden();
     })
     .catch(error => console.log(error));
 }
@@ -28,14 +29,16 @@ export function changeoverTaskStatus(taskId) {
 }
 
 export function updateTask(task) {
-  fetch(`${TASKS}/${this.state.task.id}`, {
+  console.log(task.id);
+  fetch(`${TASKS}/${task.id}`, {
     method: 'PUT',
     headers: TASK_HEADERS,
     body: JSON.stringify(task),
   })
     .then(res => {
       // add task to local storage(?)
-      this.props.toggleHidden();
+      console.log(res);
+      // this.props.toggleHidden();
     })
     .catch(error => console.log(error));
 }
@@ -48,6 +51,7 @@ export function deleteFromAPI(id) {
     })
     .then(res => {
       // add task to local storage(?)
+      console.log(res);
     })
     .catch(error => console.log(error));
     
