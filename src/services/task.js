@@ -16,11 +16,11 @@ export function createTask(task) {
     .catch(error => console.log(error));
 }
 
-export function changeoverTaskStatus(taskId) {
+export function changeoverTaskStatus(taskId, isDone) {
   fetch(`${TASKS}/changeover/${taskId}`, {
     method: 'PUT',
     headers: TASK_HEADERS,
-    body: JSON.stringify({ status: !task.isDone })
+    body: JSON.stringify({ status: !isDone })
   })
     .then(res => {
       // add task to local storage(?)

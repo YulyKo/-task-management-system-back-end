@@ -33,8 +33,8 @@ export default class TaskListItem extends Component {
   }
 
   handleTaskStatus() {
-    const taskId = this.props.task.id;
-    taskService.changeoverTaskStatus(taskId);
+    const { id, isDone } = this.props.task;
+    taskService.changeoverTaskStatus(id, isDone);
   }
 
   deleteTask() {
