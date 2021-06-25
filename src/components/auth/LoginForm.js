@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
 import { authService } from '../../services';
-import { passwordParams, messages, TOKEN_NAME } from '../../utils/auth.consts';
+import { passwordParams, messages, TOKEN_NAME } from '../../utils/auth.const';
 
 export default class LoginForm extends Component {
 

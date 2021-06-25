@@ -1,5 +1,5 @@
-import { AUTH, BASE_URL } from '../utils/api_urls';
-import { COMMON_HEADERS } from '../utils/common_headers';
+import { AUTH, BASE_URL } from '../utils/apiUrls.const';
+import { COMMON_HEADERS } from '../utils/commonHeaders.const';
 
 export function registration(user) {
   return fetch(`${AUTH}/registration`, {

@@ -1,6 +1,6 @@
 
-import { TASKS } from '../utils/api_urls';
-import { TASK_HEADERS } from '../utils/common_headers';
+import { TASKS } from '../utils/apiUrls.const';
+import { TASK_HEADERS } from '../utils/commonHeaders.const';
 
 export function createTask(task) {
   fetch(TASKS, {

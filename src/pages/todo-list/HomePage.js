@@ -3,9 +3,9 @@ import ModalWindowShell from '../../components/ModalWindowShell';
 import TaskListItem from '../../components/todo/TaskListItem';
 import TaskForm from '../../components/todo/TaskForm';
 import {useLocation} from 'react-router-dom';
-import { TASKS } from '../../utils/api_urls';
-import { TASK_HEADERS } from '../../utils/common_headers';
-import { OWNER_TOKEN_NAME } from '../../utils/auth.consts';
+import { TASKS } from '../../utils/apiUrls.const';
+import { TASK_HEADERS } from '../../utils/commonHeaders.const';
+import { OWNER_TOKEN_NAME } from '../../utils/auth.const';
 
 export class HomePage extends Component {
   constructor(props) {

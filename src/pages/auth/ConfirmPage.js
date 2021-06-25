@@ -2,7 +2,7 @@ import { any } from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { authService } from '../../services';
-import { TOKEN_NAME } from '../../utils/auth.consts';
+import { TOKEN_NAME } from '../../utils/auth.const';
 
 export class ConfirmPage extends React.Component {
 

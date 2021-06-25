@@ -6,7 +6,8 @@ import { RegistrationPage } from '../pages/auth/RegistrationPage';
 import { RootPage } from '../pages/RootPage';
 import { NotFound } from '../pages/NotFound';
 import { HomePage } from '../pages/todo-list/HomePage';
-import { HOME_PAGE, LOGIN, REGISTRATION, ROOT_PAGE } from './paths.consts';
+import { HOME_PAGE, LOGIN, REGISTRATION, ROOT_PAGE } from './paths.const';
+import PrivateRoute from './PrivateRoute';
 
 export const RouterConfig = () =>
   <Switch>
@@ -16,7 +17,9 @@ export const RouterConfig = () =>
     {/* private auth routes */}
     <Route exact path={REGISTRATION} component={ RegistrationPage } />
     <Route exact path={LOGIN} component={ LoginPage } />
-    <Route path={HOME_PAGE} component={ HomePage } />
+    <PrivateRoute path={HOME_PAGE}>
+      <Route component={ HomePage } />
+    </PrivateRoute>
     <Route path="/confirm/:code" component={ ConfirmPage } />
 
     {/* for not found */}

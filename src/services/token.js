@@ -1,4 +1,4 @@
-import { TOKEN_NAME } from '../utils/auth.consts';
+import { TOKEN_NAME } from '../utils/auth.const';
 
 export function getToken() {
   return localStorage.getItem(TOKEN_NAME);

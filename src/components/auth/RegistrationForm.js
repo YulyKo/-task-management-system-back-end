@@ -3,7 +3,7 @@ import validator from 'validator';
 import User from '../../models/user.class';
 import { authService } from '../../services';
 import { Redirect } from 'react-router';
-import { passwordParams, messages, locate as locales, TOKEN_NAME, OWNER_TOKEN_NAME } from '../../utils/auth.consts';
+import { passwordParams, messages, locate as locales, TOKEN_NAME, OWNER_TOKEN_NAME } from '../../utils/auth.const';
 
 export default class RegistrationForm extends Component {
 
