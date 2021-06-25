@@ -22,6 +22,7 @@ export default class RegistrationForm extends Component {
         username: 'sdfghj',
         passwordConfirm: '1qASDFGHJKL',
       },
+      access: false,
     };
   }
 
@@ -49,8 +50,10 @@ export default class RegistrationForm extends Component {
     const key = Object.keys(res)[0];
     if (key === 'message') {
       this.setState({ userExistError: messages.USER_EXIST });
+      this.setState({ access: false });
     }
     authService.setOwnerKey(this.state.user.email);
+    this.setState({ access: true });
     this.setAccessToken(res);
   }
 
@@ -142,7 +145,7 @@ export default class RegistrationForm extends Component {
   }
 
   render() {
-    const token = tokenService.getToken();
+    const { access } = this.state;
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
@@ -174,7 +177,7 @@ export default class RegistrationForm extends Component {
         Registration
       </button>
       {
-        token ? 
+        access ? 
           <Redirect to={CONFIRM} /> : ''
       }
     </form>;
