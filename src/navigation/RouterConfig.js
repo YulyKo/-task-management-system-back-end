@@ -20,7 +20,7 @@ export const RouterConfig = () =>
     <Route path={CONFIRM_BY_EMAIL} component={ ConfirmedPage } />
 
     {/* private auth route to page with tasks */}
-    <PrivateRoute path={HOME_PAGE}>
+    <PrivateRoute path={ HOME_PAGE }>
       <Route component={ HomePage } />
     </PrivateRoute>
 

@@ -2,8 +2,10 @@ import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
 import { CONFIRM } from '../../navigation/paths.const';
-import { authService } from '../../services';
-import { passwordParams, messages, locate as locales, OWNER_TOKEN_NAME } from '../../utils/auth.const';
+import { authService, tokenService } from '../../services';
+import { passwordParams, messages, locate as locales } from '../../utils/auth.const';
+// import { createBrowserHistory } from 'history';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
@@ -38,14 +40,9 @@ export default class RegistrationForm extends Component {
     return user;
   }
 
-  redirect() {
-    window.location.pathname = CONFIRM;
-  }
-
   setAccessToken(res) {
     const token = res.accessToken;
-    authService.setConfirmedStatus(token);
-    console.log(authService.getConfirmedStatus());
+    tokenService.setToken(token);
   }
 
   validUser(res) {
@@ -55,7 +52,6 @@ export default class RegistrationForm extends Component {
     }
     authService.setOwnerKey(this.state.user.email);
     this.setAccessToken(res);
-    this.redirect();
   }
 
   validUsername() {
@@ -146,6 +142,7 @@ export default class RegistrationForm extends Component {
   }
 
   render() {
+    const token = tokenService.getToken();
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
@@ -176,6 +173,10 @@ export default class RegistrationForm extends Component {
       <button type="submit">
         Registration
       </button>
+      {
+        token ? 
+          <Redirect to={CONFIRM} /> : ''
+      }
     </form>;
   }
 }
