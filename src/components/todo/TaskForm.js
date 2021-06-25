@@ -1,6 +1,6 @@
 import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
-import { PRIORITIES } from '../../utils/priorities';
+import { PRIORITIES } from '../../utils/priorities.const';
 import PropTypes from 'prop-types';
 import { taskService } from '../../services';
 
