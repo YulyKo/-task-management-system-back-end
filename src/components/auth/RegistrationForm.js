@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
 import { CONFIRM } from '../../navigation/paths.const';
-import { authService, tokenService } from '../../services';
+import { userService } from '../../services';
 import { passwordParams, messages, locate as locales } from '../../utils/auth.const';
 // import { createBrowserHistory } from 'history';
 import { Redirect } from 'react-router-dom';
@@ -43,7 +43,7 @@ export default class RegistrationForm extends Component {
 
   setAccessToken(res) {
     const token = res.accessToken;
-    tokenService.setToken(token);
+    userService.storage.setToken(token);
   }
 
   validUser(res) {
@@ -52,7 +52,7 @@ export default class RegistrationForm extends Component {
       this.setState({ userExistError: messages.USER_EXIST });
       this.setState({ access: false });
     }
-    authService.setOwnerKey(this.state.user.email);
+    userService.storage.setOwnerKey(this.state.user.email);
     this.setState({ access: true });
     this.setAccessToken(res);
   }

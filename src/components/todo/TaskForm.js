@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities.const';
 import PropTypes from 'prop-types';
-import { authService, taskService } from '../../services';
+import { userService, taskService } from '../../services';
 
 export default class TaskForm extends Component {
   static get propTypes() { 
@@ -42,9 +42,9 @@ export default class TaskForm extends Component {
     // set default data
     task.dueDate = task.dueDate ? task.dueDate : Date.now();
     task.priority = +task.priority;
-    task.ownerEmail = authService.getOwnerKey();
+    task.ownerEmail = userService.storage.getOwnerKey();
 
-    taskService.createTask(task);
+    taskService.actions.createTask(task);
   }
 
   update() {
@@ -52,7 +52,7 @@ export default class TaskForm extends Component {
     const task = this.compareTask();
     // TODO update data local
     // http calling here
-    taskService.updateTask(task);
+    taskService.actions.updateTask(task);
   }
 
   setFieldValue(field, e){
@@ -101,7 +101,7 @@ export default class TaskForm extends Component {
     newTask.description = fieldsData.description;
     newTask.priority = fieldsData.priority;
     newTask.dueDate = fieldsData.dueDate;
-    newTask.ownerEmail = authService.getOwnerKey();
+    newTask.ownerEmail = userService.storage.getOwnerKey();
     return newTask;
   }
 

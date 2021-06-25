@@ -25,5 +25,5 @@ export const messages = {
 };
 
 export const ACCESS_TOKEN = 'tms-access-token';
-export const OWNER_TOKEN_NAME = 'tms-owner';
+export const OWNER_KEY = 'tms-owner';
 export const CONFIRMED_STATUS = 'tms-confirmed';

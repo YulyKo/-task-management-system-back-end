@@ -1,9 +1,9 @@
-const taskService = require('./task');
-const auth = require('./auth');
-const token = require('./token');
+const taskService = require('./tasks/index');
+const user = require('./user/index');
+const storage = require('./storage');
 
 module.exports = {
   taskService: taskService,
-  authService: auth,
-  tokenService: token,
+  userService: user,
+  storage: storage,
 };

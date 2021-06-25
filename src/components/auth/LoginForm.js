@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
 import { HOME_PAGE } from '../../navigation/paths.const';
-import { authService, tokenService } from '../../services';
+import { userService } from '../../services';
 import { passwordParams, messages } from '../../utils/auth.const';
 import { Redirect } from 'react-router-dom';
 
@@ -16,14 +16,13 @@ export default class LoginForm extends Component {
         email: '',
         password: '',
       },
-      // access: false,
     };
   }
 
   setAccessToken(res) {
-    tokenService.setToken(res.accessToken);
-    authService.setConfirmedStatus(res.confirmed);
-    authService.setOwnerKey(res.email);
+    userService.storage.setToken(res.accessToken);
+    userService.storage.setConfirmedStatus(res.confirmed);
+    userService.storage.setOwnerKey(res.email);
   }
 
   validUser(res) {
@@ -89,13 +88,13 @@ export default class LoginForm extends Component {
     this.handleValidation();
     if (this.state.emailError === '' && this.state.passwordError === '') {
       const user = this.state.user;
-      const smth = authService.login(user);
+      const smth = userService.actions.login(user);
       smth.then(res => this.validUser(res));
     }
   }
 
   render() {
-    const owner = authService.getOwnerKey();
+    const owner = userService.storage.getOwnerKey();
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"

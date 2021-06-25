@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { ROOT_PAGE } from '../../navigation/paths.const';
-import { tokenService , authService} from '../../services/index';
+import { storage } from '../../services/index';
 
 export default class LogoutButton extends Component {
 
@@ -13,9 +13,7 @@ export default class LogoutButton extends Component {
   }
 
   logout() {
-    tokenService.cleanToken();
-    authService.clearConfirmedStatus();
-    authService.clearOwnerKey();
+    storage.clean();
     this.setState({ clicked: true });
   }
 

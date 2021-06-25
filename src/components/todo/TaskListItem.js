@@ -18,11 +18,12 @@ export default class TaskListItem extends Component {
       isFormHidden: true,
       isTaskWindowHidden: true,
     };
+    console.log(this.state);
   }
 
   toggleEditForm() {
     this.setState({
-      isFormHidden: !this.state.isFormHidden
+      isFormHidden: !this.state.isFormHidden,
     });
   }
 
@@ -34,12 +35,12 @@ export default class TaskListItem extends Component {
 
   handleTaskStatus() {
     const { id, isDone } = this.props.task;
-    taskService.changeoverTaskStatus(id, isDone);
+    taskService.actions.changeoverTaskStatus(id, isDone);
   }
 
   deleteTask() {
     const id = this.props.task.id;
-    taskService.deleteFromAPI(id);
+    taskService.actions.deleteFromAPI(id);
   }
 
   render() {

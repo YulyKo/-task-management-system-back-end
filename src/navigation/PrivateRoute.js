@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { authService, tokenService } from '../services/index';
+import { userService } from '../services/index';
 import { Route, Redirect } from 'react-router-dom';
 import { REGISTRATION } from './paths.const';
 import PropTypes from 'prop-types';
@@ -12,8 +12,8 @@ class PrivateRoute extends Component {
   }
 
   render() {
-    const token = tokenService.getToken();
-    const confirmed = authService.getConfirmedStatus();
+    const token = userService.storage.getToken();
+    const confirmed = userService.storage.getConfirmedStatus();
     return <Route
       render={() => 
         // token && confirmed

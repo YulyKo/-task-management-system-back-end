@@ -1,13 +1,16 @@
-import { ACCESS_TOKEN } from '../utils/auth.const';
+export function setTasks(tasks) {
+  sessionStorage.setItem(tasks);
+} 
 
+export function getTasks(tasks) {
+  sessionStorage.setItem(tasks);
+}
+
+// save|remove token
 export function getToken() {
   return localStorage.getItem(ACCESS_TOKEN);
 }
 
 export function setToken(newToken) {
   localStorage.setItem(ACCESS_TOKEN, newToken);
-}
-
-export function cleanToken() {
-  localStorage.clear(ACCESS_TOKEN);
 }
