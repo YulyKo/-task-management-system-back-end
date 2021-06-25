@@ -14,6 +14,7 @@ export class HomePage extends Component {
     this.state = {
       tasks: [], // type is Task, look models/task.class.js
       isHidden: false,
+      isLoaded: false,
     };
   }
 
@@ -72,10 +73,12 @@ export class HomePage extends Component {
               <TaskForm toggleHidden={this.toggleHidden.bind(this)}/>
             </ModalWindowShell>
           }
-          { tasks }
-          {/* {tasks.map((task, index) => (
-            <TaskListItem key={index} task={task} />
-          ))} */}
+          { tasks.length > 1 ? 
+            tasks.map((task, index) => (
+              <TaskListItem key={index} task={task} />
+            )) :
+            <p>No tasks yet</p>
+          }
         </div>
       );
     }

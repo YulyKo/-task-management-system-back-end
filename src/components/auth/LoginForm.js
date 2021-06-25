@@ -3,6 +3,7 @@ import validator from 'validator';
 import { HOME_PAGE } from '../../navigation/paths.const';
 import { authService, tokenService } from '../../services';
 import { passwordParams, messages } from '../../utils/auth.const';
+import { Redirect } from 'react-router-dom';
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -15,27 +16,24 @@ export default class LoginForm extends Component {
         email: '',
         password: '',
       },
+      // access: false,
     };
-  }
-
-  redirect(res) {
-    if (res.confirmed) {
-      window.location.pathname = HOME_PAGE;
-    } else window.location.pathname = '/not-confirmed';
   }
 
   setAccessToken(res) {
     tokenService.setToken(res.accessToken);
     authService.setConfirmedStatus(res.confirmed);
+    authService.setOwnerKey(res.email);
   }
 
   validUser(res) {
     console.log(res, res.message);
     if (res.message) {
       this.setState({ userExistError: res.message });
+      this.setState({ access: false });
     }
     this.setAccessToken(res);
-    this.redirect(res);
+    this.setState({ access: true });
   }
 
   validPassword() {
@@ -97,6 +95,7 @@ export default class LoginForm extends Component {
   }
 
   render() {
+    const owner = authService.getOwnerKey();
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
@@ -115,6 +114,10 @@ export default class LoginForm extends Component {
       <button type="submit">
         Login
       </button>
+      {
+        owner ? 
+          <Redirect to={ HOME_PAGE } /> : ''
+      }
     </form>;
   }
 }

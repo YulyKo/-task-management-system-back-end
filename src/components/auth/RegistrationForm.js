@@ -5,7 +5,7 @@ import { CONFIRM } from '../../navigation/paths.const';
 import { authService, tokenService } from '../../services';
 import { passwordParams, messages, locate as locales } from '../../utils/auth.const';
 // import { createBrowserHistory } from 'history';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
