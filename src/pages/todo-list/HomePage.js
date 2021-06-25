@@ -6,6 +6,7 @@ import {useLocation} from 'react-router-dom';
 import { TASKS } from '../../utils/apiUrls.const';
 import { TASK_HEADERS } from '../../utils/commonHeaders.const';
 import { OWNER_TOKEN_NAME } from '../../utils/auth.const';
+import { LogoutButton } from '../../components/auth/LogoutButton';
 
 export class HomePage extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ export class HomePage extends Component {
           <button className={btn_class} onClick={this.toggleHidden.bind(this)} >
           Create a task
           </button>
+          <LogoutButton />
           {
             this.state.isHidden && 
             <ModalWindowShell>

@@ -8,6 +8,6 @@ export function setToken(newToken) {
   localStorage.setItem(ACCESS_TOKEN, newToken);
 }
 
-export function  cleanToken() {
+export function cleanToken() {
   localStorage.clear(ACCESS_TOKEN);
 }

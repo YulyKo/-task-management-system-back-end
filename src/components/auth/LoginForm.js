@@ -1,5 +1,6 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
+import { HOME_PAGE } from '../../navigation/paths.const';
 import { authService, tokenService } from '../../services';
 import { passwordParams, messages } from '../../utils/auth.const';
 
@@ -19,7 +20,7 @@ export default class LoginForm extends Component {
 
   redirect(res) {
     if (res.confirmed) {
-      window.location.pathname = '/todo-list';
+      window.location.pathname = HOME_PAGE;
     } else window.location.pathname = '/not-confirmed';
   }
 
