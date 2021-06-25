@@ -1,4 +1,5 @@
 import { AUTH, BASE_URL } from '../utils/apiUrls.const';
+import { CONFIRMED_STATUS } from '../utils/auth.const';
 import { COMMON_HEADERS } from '../utils/commonHeaders.const';
 
 export function registration(user) {
@@ -26,3 +27,12 @@ export function confirmUser(code) {
   })
     .then((res) => res.json());
 }
+
+export function getConfirmedStatus() {
+  return localStorage.getItem(CONFIRMED_STATUS);
+}
+
+export function setConfirmedStatus(newStatus) {
+  localStorage.setItem(CONFIRMED_STATUS, newStatus);
+}
+

@@ -39,6 +39,10 @@ export default class RegistrationForm extends Component {
     return user;
   }
 
+  redirect() {
+    window.location.pathname = '/confirm/go-to-email';
+  }
+
   setAccessToken(res) {
     const token = res.accessToken;
     localStorage.setItem(TOKEN_NAME, token);
@@ -52,7 +56,7 @@ export default class RegistrationForm extends Component {
     }
     localStorage.setItem(OWNER_TOKEN_NAME, this.state.user.email);
     this.setAccessToken(res);
-    <Redirect to="/home" />;
+    this.redirect();
   }
 
   validUsername() {

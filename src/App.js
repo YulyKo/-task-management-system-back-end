@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { RootPage } from './pages/RootPage';
+import { BrowserRouter, Redirect } from 'react-router-dom';
+import { HOME_PAGE } from './navigation/paths.const';
 import { RouterConfig } from './navigation/RouterConfig';
 import { tokenService } from './services/index';
 
@@ -14,11 +14,12 @@ class App extends Component {
   }
 
   render() {
-    // if (!this.state.token) {
-    //   return <BrowserRouter>
-    //     <RootPage />
-    //   </BrowserRouter>;
-    // }
+    if (this.state.token) {
+      return <BrowserRouter>
+        <Redirect to={HOME_PAGE} />
+        <RouterConfig />
+      </BrowserRouter>;
+    }
     return (
       <BrowserRouter>
         {/* <HomePage /> */}

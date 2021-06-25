@@ -1,10 +1,9 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
-import { authService } from '../../services';
-import { passwordParams, messages, TOKEN_NAME } from '../../utils/auth.const';
+import { authService, tokenService } from '../../services';
+import { passwordParams, messages } from '../../utils/auth.const';
 
 export default class LoginForm extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -17,9 +16,16 @@ export default class LoginForm extends Component {
       },
     };
   }
-  
+
+  redirect(res) {
+    if (res.confirmed) {
+      window.location.pathname = '/todo-list';
+    } else window.location.pathname = '/not-confirmed';
+  }
+
   setAccessToken(res) {
-    localStorage.setItem(TOKEN_NAME, res.accessToken);
+    tokenService.setToken(res.accessToken);
+    authService.setConfirmedStatus(res.confirmed);
   }
 
   validUser(res) {
@@ -28,6 +34,7 @@ export default class LoginForm extends Component {
       this.setState({ userExistError: res.message });
     }
     this.setAccessToken(res);
+    this.redirect(res);
   }
 
   validPassword() {
