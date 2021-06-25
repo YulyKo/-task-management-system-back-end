@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { ROOT_PAGE } from '../../navigation/paths.const';
 import { tokenService , authService} from '../../services/index';
 
-export class LogoutButton extends Component {
+export default class LogoutButton extends Component {
 
   constructor(props) {
     super(props);

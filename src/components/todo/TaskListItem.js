@@ -43,7 +43,7 @@ export default class TaskListItem extends Component {
   }
 
   render() {
-    return <div>
+    return <li>
       <input type="checkbox" defaultChecked={this.props.task.isDone}
         onChange={this.handleTaskStatus.bind(this)} />
       <button onClick={this.toggleTaskWindow.bind(this)}>
@@ -63,6 +63,6 @@ export default class TaskListItem extends Component {
         </ModalWindowShell>
       }
       <button onClick={this.deleteTask.bind(this)}>Delete</button>
-    </div>;
+    </li>;
   }
 }
