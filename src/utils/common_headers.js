@@ -4,5 +4,5 @@ export const COMMON_HEADERS = {'Content-Type': 'application/json'};
 export const TASK_HEADERS = {
   'Content-Type': 'application/json',
   'owner': localStorage.getItem(OWNER_EMAIL),
-  'authorization': localStorage.getItem(TOKEN_NAME)
+  'Authorization': `Bearer ${localStorage.getItem(TOKEN_NAME)}`
 };

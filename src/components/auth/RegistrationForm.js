@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
 import { authService } from '../../services';
+import { Redirect } from 'react-router';
 import { passwordParams, messages, locate as locales, TOKEN_NAME, OWNER_TOKEN_NAME } from '../../utils/auth.consts';
 
 export default class RegistrationForm extends Component {
@@ -48,9 +49,10 @@ export default class RegistrationForm extends Component {
     const key = Object.keys(res)[0];
     if (key === 'message') {
       this.setState({ userExistError: messages.USER_EXIST });
-      localStorage.setItem(OWNER_TOKEN_NAME, this.state.user.email);
     }
+    localStorage.setItem(OWNER_TOKEN_NAME, this.state.user.email);
     this.setAccessToken(res);
+    <Redirect to="/home" />;
   }
 
   validUsername() {

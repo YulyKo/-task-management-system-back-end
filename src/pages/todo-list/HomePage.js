@@ -7,7 +7,7 @@ import { TASKS } from '../../utils/api_urls';
 import { TASK_HEADERS } from '../../utils/common_headers';
 import { OWNER_TOKEN_NAME } from '../../utils/auth.consts';
 
-export class TasksListPage extends Component {
+export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +17,6 @@ export class TasksListPage extends Component {
   }
 
   componentDidMount() {
-    const ownerEmail = localStorage.getItem(OWNER_TOKEN_NAME);
     fetch(TASKS, {
       method: 'GET',
       headers: TASK_HEADERS,
@@ -25,6 +24,7 @@ export class TasksListPage extends Component {
       .then(res => res.json())
       .then(
         (result) => {
+          console.log(result);
           this.setState({
             isLoaded: true,
             tasks: result,
@@ -70,9 +70,10 @@ export class TasksListPage extends Component {
               <TaskForm toggleHidden={this.toggleHidden.bind(this)}/>
             </ModalWindowShell>
           }
-          {tasks.map((task, index) => (
+          { tasks }
+          {/* {tasks.map((task, index) => (
             <TaskListItem key={index} task={task} />
-          ))}
+          ))} */}
         </div>
       );
     }
