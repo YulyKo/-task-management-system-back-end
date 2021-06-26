@@ -11,6 +11,7 @@ export default class TasksList extends Component {
       tasks: [],
       isLoaded: false,
       error: '',
+      isAllDone: false,
     };
   }
 
@@ -23,11 +24,11 @@ export default class TasksList extends Component {
       .then(
         (result) => {
           taskService.mutations.setTasks(result);
-          console.log();
           this.setState({
             isLoaded: true,
             tasks: taskService.mutations.storage.tasks,
           });
+          this.setDefaultMark();
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -41,21 +42,40 @@ export default class TasksList extends Component {
       );
   }
 
+  setDefaultMark() {
+    let tasksStatus = false;
+    this.state.tasks.forEach((task) => {
+      if(task.isDone === false) tasksStatus = true;
+    });
+    this.setState({ isAllDone: tasksStatus });
+    taskService.actions.markAll(true);
+  }
+
+  markAll() {
+    const { isAllDone } = this.state;
+    console.log('conponent');
+    taskService.actions.markAll(isAllDone);
+  }
+
   render() {
-    const { error, isLoaded, tasks } = this.state;
+    const { error, isLoaded, tasks, isAllDone } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return <ul>
-        { tasks.length > 0 ? 
-          tasks.map((task, index) => (
-            <TaskListItem key={index} task={task} />
-          )) :
-          <p>No tasks</p>
-        }
-      </ul>;
+      return <div>
+        <input type="checkbox" defaultChecked={ isAllDone }
+          onChange={this.markAll.bind(this)} />
+        <ul>
+          { tasks.length > 0 ? 
+            tasks.map((task, index) => (
+              <TaskListItem key={index} task={task} />
+            )) :
+            <p>No tasks</p>
+          }
+        </ul>
+      </div>;
     }
   }
 }

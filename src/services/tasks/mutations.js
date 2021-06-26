@@ -31,10 +31,18 @@ export function removeTask(id) {
 
   // cut out task from list
   storage.tasks.splice(index, 1);
-
 }
 
 export function updateTask(oldTask, newTask) {
   const index = storage.tasks.indexOf(oldTask);
   storage.tasks[index] = newTask;
+}
+
+export function markAllLocal(status) {
+  // update idDone in storage
+  storage.tasks.forEach((task) => {
+    task.isDone = status;
+    console.log(task);
+  });
+  // update changed it input:checkbox
 }

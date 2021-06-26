@@ -1,5 +1,5 @@
 
-import { addTask, removeTask } from './mutations';
+import { addTask, markAllLocal, removeTask, storage } from './mutations';
 import { TASKS } from '../../utils/apiUrls.const';
 import { TASK_HEADERS } from '../../utils/commonHeaders.const';
 
@@ -11,7 +11,7 @@ export function createTask(task) {
   })
     .then(res => res.json())
     .then(res => {
-      // add task to local storage(?)
+      // add task to local storage
       console.log(res);
       addTask(res);
       // this.props.toggleHidden();
@@ -25,9 +25,6 @@ export function changeoverTaskStatus(taskId, isDone) {
     headers: TASK_HEADERS,
     body: JSON.stringify({ status: !isDone })
   })
-    .then(res => {
-      // add task to local storage(?)
-    })
     .catch(error => console.log(error));      
 }
 
@@ -40,7 +37,7 @@ export function updateTask(task) {
   })
     .then(res => res.json())
     .then(res => {
-      // add task to local storage
+      // update task in local storage
       updateTask(task, res);
       // this.props.toggleHidden(); // TODO use it
     })
@@ -55,9 +52,38 @@ export function deleteFromAPI(id) {
     })
     // .then(res => res.json())
     .then(res => {
-      // add task to local storage
+      // remove task from local storage
       console.log(res);
       removeTask(id);
     })
     .catch(error => console.log(error));
+}
+
+export function markAll(status) {
+  console.log('action');
+  storage.tasks.forEach((task) => {
+    changeoverTaskStatus(task.id, status);
+    task.isDone = status;
+  });
+  console.log(storage.tasks);
+  let checkBoxesArray = document.querySelectorAll('input[type="checkbox"]');
+  // checkBoxesArray = status;
+  checkBoxesArray.forEach((input) => {
+    console.log(input.value);
+  });
+  console.log('-- end --');
+  // doesn't work
+  // fetch(`${TASKS}/changeover-all`, 
+  //   {
+  //     method: 'PUT',
+  //     headers: TASK_HEADERS,
+  //     body: {
+  //       status: status,
+  //     }
+  //   })
+  //   .then(res => {
+  //     // change status 'isDone' at local storage tasks
+  //     console.log(res);
+  //   })
+  //   .catch(error => console.log(error));
 }
