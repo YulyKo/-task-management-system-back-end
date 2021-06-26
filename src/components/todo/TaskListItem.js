@@ -38,13 +38,22 @@ export default class TaskListItem extends Component {
     taskService.actions.changeoverTaskStatus(id, isDone);
   }
 
+  
+  hideTask(id) {
+    const htmlItem = document.getElementById(id);
+    htmlItem.style.display = 'none';
+  }
+
   deleteTask() {
     const id = this.props.task.id;
     taskService.actions.deleteFromAPI(id);
+
+    // hide element on a page
+    this.hideTask(id);
   }
 
   render() {
-    return <li>
+    return <li id={this.props.task.id}>
       <input type="checkbox" defaultChecked={this.props.task.isDone}
         onChange={this.handleTaskStatus.bind(this)} />
       <button onClick={this.toggleTaskWindow.bind(this)}>

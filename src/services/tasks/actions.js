@@ -1,4 +1,5 @@
 
+import { addTask, removeTask } from './mutations';
 import { TASKS } from '../../utils/apiUrls.const';
 import { TASK_HEADERS } from '../../utils/commonHeaders.const';
 
@@ -8,9 +9,11 @@ export function createTask(task) {
     headers: TASK_HEADERS,
     body: JSON.stringify(task),
   })
+    .then(res => res.json())
     .then(res => {
       // add task to local storage(?)
       console.log(res);
+      addTask(res);
       // this.props.toggleHidden();
     })
     .catch(error => console.log(error));
@@ -35,10 +38,11 @@ export function updateTask(task) {
     headers: TASK_HEADERS,
     body: JSON.stringify(task),
   })
+    .then(res => res.json())
     .then(res => {
-      // add task to local storage(?)
-      console.log(res);
-      // this.props.toggleHidden();
+      // add task to local storage
+      updateTask(task, res);
+      // this.props.toggleHidden(); // TODO use it
     })
     .catch(error => console.log(error));
 }
@@ -49,17 +53,11 @@ export function deleteFromAPI(id) {
       method: 'DELETE',
       headers: TASK_HEADERS,
     })
+    // .then(res => res.json())
     .then(res => {
-      // add task to local storage(?)
+      // add task to local storage
       console.log(res);
+      removeTask(id);
     })
     .catch(error => console.log(error));
-    
-  // remove from local
-  // for (let index = 0; index < tasks.length; index++) {
-  //   const task = tasks[index];
-  //   if (task.id === id) {
-  //     tasks.splice(index, 1);
-  //   }
-  // }
 }

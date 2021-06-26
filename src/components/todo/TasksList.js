@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { taskService } from '../../services';
 import { TASKS } from '../../utils/apiUrls.const';
 import { TASK_HEADERS } from '../../utils/commonHeaders.const';
 import TaskListItem from './TaskListItem';
@@ -21,10 +22,11 @@ export default class TasksList extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
+          taskService.mutations.setTasks(result);
+          console.log();
           this.setState({
             isLoaded: true,
-            tasks: result,
+            tasks: taskService.mutations.storage.tasks,
           });
         },
         // Note: it's important to handle errors here
@@ -47,7 +49,7 @@ export default class TasksList extends Component {
       return <div>Loading...</div>;
     } else {
       return <ul>
-        { tasks.length > 1 ? 
+        { tasks.length > 0 ? 
           tasks.map((task, index) => (
             <TaskListItem key={index} task={task} />
           )) :

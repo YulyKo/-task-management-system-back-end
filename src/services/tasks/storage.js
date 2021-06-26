@@ -1,16 +1,7 @@
 export function setTasks(tasks) {
-  sessionStorage.setItem(tasks);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 } 
 
-export function getTasks(tasks) {
-  sessionStorage.setItem(tasks);
-}
-
-// save|remove token
-export function getToken() {
-  return localStorage.getItem(ACCESS_TOKEN);
-}
-
-export function setToken(newToken) {
-  localStorage.setItem(ACCESS_TOKEN, newToken);
+export function getTasks() {
+  return localStorage.getItem('tasks');
 }
