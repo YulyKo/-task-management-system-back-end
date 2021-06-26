@@ -22,6 +22,8 @@ export const messages = {
   INVALID_USERNAME: 'Username must have only letters and numbers',
   REQUARIED: 'Cannot be empty',
   NOT_EQUALS_PASSWRODS: 'Passwords not equals',
+  USER_EXIST: 'User with this email already exist',
+  USER_NOT_EXIST: 'User with this email already don&#39;t exist',
 };
 
 export const ACCESS_TOKEN = 'tms-access-token';

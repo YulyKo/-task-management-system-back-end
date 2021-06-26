@@ -28,7 +28,7 @@ export default class LoginForm extends Component {
   validUser(res) {
     console.log(res, res.message);
     if (res.message) {
-      this.setState({ userExistError: res.message });
+      this.setState({ userExistError: messages.USER_NOT_EXIST });
       this.setState({ access: false });
     }
     this.setAccessToken(res);
@@ -37,16 +37,23 @@ export default class LoginForm extends Component {
 
   validPassword() {
     const password = this.state.user.password;
-    validator.isStrongPassword(password, passwordParams) ?
-      this.setState({ passwordError: '' }) :
+    const validStatus = validator.isStrongPassword(password, passwordParams);
+    if (validStatus){
+      this.setState({ passwordError: '' });
+    } else {
       this.setState({ passwordError: messages.INVALID_PASSWORD });
+      return false;
+    }
   }
 
   validEmail() {
     const email = this.state.user.email;
-    validator.isEmail(email) ?
-      this.setState({ emailError: '' }) :
+    if (validator.isEmail(email)) {
+      this.setState({ emailError: '' });
+    } else {
       this.setState({ emailError: messages.INVALID_EMAIL });
+      return false;
+    }
   }
 
   setFieldValue(field, e){
@@ -65,22 +72,20 @@ export default class LoginForm extends Component {
   }
 
   handleValidation() {
+    let validFomrStatus = true;
     for (const fieldName in this.state.user) {
-      let isInputted = this.checkExistRequired(fieldName);
-      if (isInputted) {
-        switch (fieldName) {
-        case 'email':
-          this.validEmail();
-          break;
-        case 'password':
-          this.validPassword();
-          break;
+      const isInputted = this.checkExistRequired(fieldName);
+      validFomrStatus = isInputted;
 
-        default:
-          break;
-        }
+      if (validFomrStatus) {
+      // check by rules
+        if (fieldName === 'email')
+          validFomrStatus = this.validEmail();
+        else if (fieldName === 'password')
+          validFomrStatus = this.validPassword();
       }
     }
+    return validFomrStatus;
   }
 
   onSubmit(event) {
@@ -88,8 +93,8 @@ export default class LoginForm extends Component {
     this.handleValidation();
     if (this.state.emailError === '' && this.state.passwordError === '') {
       const user = this.state.user;
-      const smth = userService.actions.login(user);
-      smth.then(res => this.validUser(res));
+      const loginAction = userService.actions.login(user);
+      loginAction.then(res => this.validUser(res));
     }
   }
 
