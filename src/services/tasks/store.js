@@ -15,10 +15,14 @@ let app = {
   },
 
   getRow: function(id) {
-    const task = _.find(this.rows, (task) => {
-      return task.id.includes(id);
+    return _.find(this.rows, (task) => {
+      if ( task.id === id )
+        return task;
     });
-    return task;
+  },
+
+  getIsAllDone: function () {
+    return this.isAllDone;
   },
 
   setIsAllDone: function (status) {
@@ -29,13 +33,12 @@ let app = {
     this.rows.forEach((task) => {
       task.isDone = status;
     });
+    this.isAllDone = status;
   },
 
-  markTask: function(id, status) {
-    const task = _.find(this.rows, (task) => {
-      return task.id.includes(id);
-    });
-    task.isDone = status;
+  markTask: function(task, status) {
+    const index = _.indexOf(this.rows, task);
+    this.rows[index].isDone = status;
   },
 
   updateRow: function(oldTask, newTask) {

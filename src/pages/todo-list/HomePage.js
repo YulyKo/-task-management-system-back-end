@@ -16,6 +16,7 @@ export class HomePage extends Component {
       app: app,
       isHidden: false,
       isMarkAll: false,
+      defaultCheckedAll: false,
     };
   }
 
@@ -31,6 +32,7 @@ export class HomePage extends Component {
     const newStatus = !this.state.app.isAllDone;
     this.state.app.changeMarkAllTask(newStatus);
     taskService.actions.markAll(newStatus);
+    this.setState({ defaultCheckedAll: newStatus });
     this.setState({ isMarkAll: true });
   }
 
@@ -59,6 +61,7 @@ export class HomePage extends Component {
           this.setState({
             isLoaded: true,
           });
+          this.setDefaultMark();
           // call method for sort by done here
           (error) => {
             this.setState({
@@ -67,8 +70,7 @@ export class HomePage extends Component {
             });
           };
         }
-      )
-      .then(() => this.setDefaultMark());
+      );
   }
 
   componentDidMount() {
@@ -83,23 +85,25 @@ export class HomePage extends Component {
       // it mean not all tasks done and checkbox will be not checked
       if(task.isDone === false) tasksStatus = false;
     });
+
     this.state.app.setIsAllDone(tasksStatus);
+    this.setState({ defaultCheckedAll: tasksStatus });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const listLis = document.querySelectorAll('li');
-    if ( listLis ||
+    if (
+      ( this.state.defaultCheckedAll !== nextState.defaultCheckedAll ) ||
       ( listLis.length !== app.rows.length ) ||
       ( nextState.isMarkAll !== this.state.isMarkAll )
     ) {
       return true;
     } else return false;
-    // let promise = new Prowo0
   }
 
   render() {
     let btn_class = this.state.isHidden ? 'blackButton' : 'whiteButton';
-    const { error, isLoaded, tasks, isAllDone } = this.state;
+    const { error, isLoaded, app, defaultCheckedAll } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -119,8 +123,12 @@ export class HomePage extends Component {
               <TaskForm childCloseModal={this.closeModal.bind(this)}/>
             </ModalWindowShell>
         }
-        <input id="checkAllInput" type="checkbox" checked={ this.state.app.isAllDone } onChange={this.markAll.bind(this)}
+        <input id="checkAllInput" type="checkbox"
+          checked={ defaultCheckedAll }
+          onChange={this.markAll.bind(this)}
         />
+        
+        { app.getIsAllDone() ? 'true' : 'false' }
         <ul>
           {this.setTasksList()}
         </ul>
