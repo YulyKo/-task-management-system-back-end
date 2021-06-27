@@ -1,7 +1,14 @@
 
-import { addTask, markAllLocal, removeTask, storage } from './mutations';
 import { TASKS } from '../../utils/apiUrls.const';
 import { TASK_HEADERS } from '../../utils/commonHeaders.const';
+import app from './store';
+import userService from '../user/index';
+
+export function checkErrorStatus(errorStatus) {
+  if(errorStatus === 401) {
+    userService.actions.refreshToken();
+  }
+}
 
 export function createTask(task) {
   fetch(TASKS, {
@@ -12,11 +19,12 @@ export function createTask(task) {
     .then(res => res.json())
     .then(res => {
       // add task to local storage
-      console.log(res);
-      addTask(res);
-      // this.props.toggleHidden();
+      app.addRow(res);
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log('error');
+      checkErrorStatus(error.status);
+    });
 }
 
 export function changeoverTaskStatus(taskId, isDone) {
@@ -27,11 +35,13 @@ export function changeoverTaskStatus(taskId, isDone) {
   })
     .then(res => res.json())
     .then((res) => console.log(res))
-    .catch(error => console.log(error));      
+    .catch(error => {
+      checkErrorStatus(error.status);
+      changeoverTaskStatus(taskId, isDone);
+    });
 }
 
 export function updateTask(task) {
-  console.log(task.id);
   fetch(`${TASKS}/${task.id}`, {
     method: 'PUT',
     headers: TASK_HEADERS,
@@ -40,10 +50,12 @@ export function updateTask(task) {
     .then(res => res.json())
     .then(res => {
       // update task in local storage
-      updateTask(task, res);
-      // this.props.toggleHidden(); // TODO use it
+      app.updateRow(res);
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      checkErrorStatus(error.status);
+      updateTask(task);
+    });
 }
 
 export function deleteFromAPI(id) {
@@ -52,17 +64,15 @@ export function deleteFromAPI(id) {
       method: 'DELETE',
       headers: TASK_HEADERS,
     })
-    .then(() => {
-      // remove task from local storage
-      removeTask(id);
-    })
-    .catch(error => console.log(error));
+    .catch(error => {
+      checkErrorStatus(error.status);
+      deleteFromAPI(id);
+    });
 }
 
 export function markAll(status) {
-  storage.tasks.forEach((task) => {
+  app.rows.forEach((task) => {
     changeoverTaskStatus(task.id, status);
-    task.isDone = status;
   });
   // let checkBoxesArray = document.querySelectorAll('input[type="checkbox"]');
   // checkBoxesArray.forEach((input) => {

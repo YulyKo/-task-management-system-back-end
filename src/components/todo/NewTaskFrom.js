@@ -3,8 +3,9 @@ import { Task } from '../../models/task.class';
 import { PRIORITIES } from '../../utils/priorities.const';
 import PropTypes from 'prop-types';
 import { userService, taskService } from '../../services';
+import app from '../../services/tasks/store';
 
-export default class TaskForm extends Component {
+export default class NewTaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,
@@ -19,6 +20,7 @@ export default class TaskForm extends Component {
       descriptionError: '',
       priorityError: '',
       task: {},
+      app: app,
     };
   }
 
@@ -34,7 +36,8 @@ export default class TaskForm extends Component {
     // undefined because I dont set true value in this.handleValidation(event)
     if (this.handleValidation(event) === undefined) {
       this.props.task ? this.update() : this.create();
-      this.props.childCloseModal(); // close modal window
+      // close window
+      this.props.childCloseModal();
     }
   }
 
@@ -44,14 +47,16 @@ export default class TaskForm extends Component {
     task.dueDate = task.dueDate ? task.dueDate : Date.now();
     task.priority = +task.priority;
     task.ownerEmail = userService.storage.getOwnerKey();
-
     taskService.actions.createTask(task);
+    this.state.app.addRow(task);
   }
 
   update() {
     // set task value
     const task = this.compareTask();
-    // http calling here
+    // update local task
+    this.state.app.updateRow(task);
+    // update at API
     taskService.actions.updateTask(task);
   }
 

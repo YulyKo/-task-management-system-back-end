@@ -12,19 +12,6 @@ export default class TaskListItem extends Component {
       changed: false,
     };
   }
-  /*
-  w()}}>
-        add row
-      </a>
-    </div>;
-  }
-});
-
-React.renderComponent(
-    <View />
-    , document.body);
-
-  */
 
   constructor(props) {
     super(props);
@@ -86,7 +73,7 @@ React.renderComponent(
       <button onClick={this.toggleTaskWindow.bind(this)}>
         <p>{title}</p>
         {
-          taskStatus ? <p> done</p> : 'not done'
+          taskStatus ? <p>done</p> : 'not done'
         }
       </button>
       {

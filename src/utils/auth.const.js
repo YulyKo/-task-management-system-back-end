@@ -1,7 +1,7 @@
 export const passwordParams = {
-  minLength: 8,
-  minLowercase: 1,
-  minUppercase: 1,
+  minLength: 6,
+  minLowercase: 0,
+  minUppercase: 0,
   minNumbers: 0,
   minSymbols: 0,
   returnScore: false,
@@ -17,7 +17,7 @@ export const locate = ['en-US'];
 
 export const messages = {
   INVALID_PASSWORD: `Password is not correct.
-  It must have minimum 8 letters, minimum one uppercase and one lovercase letter`,
+  It must have minimum 6 symbols or letters`,
   INVALID_EMAIL: 'Email is not correct',
   INVALID_USERNAME: 'Username must have only letters and numbers',
   REQUARIED: 'Cannot be empty',
