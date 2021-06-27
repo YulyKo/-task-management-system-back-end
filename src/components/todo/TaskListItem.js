@@ -9,16 +9,39 @@ export default class TaskListItem extends Component {
   static get propTypes() {
     return {
       task: PropTypes.any, // type is Task, look models/task.class.js
+      changed: false,
     };
   }
+  /*
+  w()}}>
+        add row
+      </a>
+    </div>;
+  }
+});
+
+React.renderComponent(
+    <View />
+    , document.body);
+
+  */
 
   constructor(props) {
     super(props);
     this.state = {
       isFormHidden: true,
       isTaskWindowHidden: true,
+      taskStatus: this.props.task.isDone,
+      changed: false,
     };
-    console.log(this.state);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps.task, this.props.task);
+    if (nextProps.task === this.props.task) {
+      return true;
+    }
+    return false;
   }
 
   toggleEditForm() {
@@ -34,11 +57,13 @@ export default class TaskListItem extends Component {
   }
 
   handleTaskStatus() {
-    const { id, isDone } = this.props.task;
-    taskService.actions.changeoverTaskStatus(id, isDone);
+    const { id } = this.props.task;
+    const { taskStatus } = this.state;
+    taskService.actions.markAll(id, !taskStatus);
+    this.setState({ taskStatus: !this.state.taskStatus });
+    this.setState({ changed: true });
   }
 
-  
   hideTask(id) {
     const htmlItem = document.getElementById(id);
     htmlItem.style.display = 'none';
@@ -53,11 +78,16 @@ export default class TaskListItem extends Component {
   }
 
   render() {
-    return <li id={this.props.task.id}>
-      <input type="checkbox" defaultChecked={this.props.task.isDone}
+    const { id, title } = this.props.task;
+    const { taskStatus } = this.state;
+    return <li id={id}>
+      <input type="checkbox" checked={taskStatus}
         onChange={this.handleTaskStatus.bind(this)} />
       <button onClick={this.toggleTaskWindow.bind(this)}>
-        <p>{this.props.task.title}</p>
+        <p>{title}</p>
+        {
+          taskStatus ? <p> done</p> : 'not done'
+        }
       </button>
       {
         !this.state.isTaskWindowHidden &&

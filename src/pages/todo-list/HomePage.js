@@ -14,7 +14,7 @@ export class HomePage extends Component {
     };
   }
 
-  toggleHidden() {
+  closeModal() {
     this.setState({
       isHidden: !this.state.isHidden
     });
@@ -24,7 +24,7 @@ export class HomePage extends Component {
     let btn_class = this.state.isHidden ? 'blackButton' : 'whiteButton';
     return (
       <div>
-        <button className={btn_class} onClick={this.toggleHidden.bind(this)} >
+        <button className={btn_class} onClick={this.closeModal.bind(this)} >
           Create a task
         </button>
         <LogoutButton />
@@ -33,7 +33,7 @@ export class HomePage extends Component {
             <ModalWindowShell>
               {/* ModalWindowShell get child in props */}
               {/* TaskForm emit method toggleHidden from child of modal Window */}
-              <TaskForm toggleHidden={this.toggleHidden.bind(this)}/>
+              <TaskForm childCloseModal={this.closeModal.bind(this)}/>
             </ModalWindowShell>
         }
         <TasksList />

@@ -23,8 +23,10 @@ export function changeoverTaskStatus(taskId, isDone) {
   fetch(`${TASKS}/changeover/${taskId}`, {
     method: 'PUT',
     headers: TASK_HEADERS,
-    body: JSON.stringify({ status: !isDone })
+    body: JSON.stringify({ status: isDone })
   })
+    .then(res => res.json())
+    .then((res) => console.log(res))
     .catch(error => console.log(error));      
 }
 
@@ -50,28 +52,25 @@ export function deleteFromAPI(id) {
       method: 'DELETE',
       headers: TASK_HEADERS,
     })
-    // .then(res => res.json())
-    .then(res => {
+    .then(() => {
       // remove task from local storage
-      console.log(res);
       removeTask(id);
     })
     .catch(error => console.log(error));
 }
 
 export function markAll(status) {
-  console.log('action');
   storage.tasks.forEach((task) => {
     changeoverTaskStatus(task.id, status);
     task.isDone = status;
   });
-  console.log(storage.tasks);
-  let checkBoxesArray = document.querySelectorAll('input[type="checkbox"]');
-  // checkBoxesArray = status;
-  checkBoxesArray.forEach((input) => {
-    console.log(input.value);
-  });
-  console.log('-- end --');
+  // let checkBoxesArray = document.querySelectorAll('input[type="checkbox"]');
+  // checkBoxesArray.forEach((input) => {
+  //   input.checked = status;
+  //   console.log(input.checked);
+  // });
+  // const checkAllInput = document.getElementById('checkAllInput');
+  // checkAllInput.checked = status;
   // doesn't work
   // fetch(`${TASKS}/changeover-all`, 
   //   {

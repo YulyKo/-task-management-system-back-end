@@ -8,7 +8,7 @@ export default class TaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,
-      // toggleHidden: PropTypes.func,
+      childCloseModal: PropTypes.func,
     };
   }
 
@@ -32,9 +32,10 @@ export default class TaskForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     // undefined because I dont set true value in this.handleValidation(event)
-    // if (this.handleValidation(event) === undefined) {
-    this.props.task ? this.update() : this.create();
-    // }
+    if (this.handleValidation(event) === undefined) {
+      this.props.task ? this.update() : this.create();
+      this.props.childCloseModal(); // close modal window
+    }
   }
 
   create() {

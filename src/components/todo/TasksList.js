@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component  } from 'react';
 import { taskService } from '../../services';
 import { TASKS } from '../../utils/apiUrls.const';
 import { TASK_HEADERS } from '../../utils/commonHeaders.const';
@@ -12,6 +12,7 @@ export default class TasksList extends Component {
       isLoaded: false,
       error: '',
       isAllDone: false,
+      app: app,
     };
   }
 
@@ -28,33 +29,47 @@ export default class TasksList extends Component {
             isLoaded: true,
             tasks: taskService.mutations.storage.tasks,
           });
-          this.setDefaultMark();
+          // sort by done here
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
+      )
+      .then(() => this.setDefaultMark())
+      .catch((error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      });
+  }
+
+  //before we render, start listening to the app for changes
+  componentWillMount() {
+    this.setState.app({ listener: this });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(this.state.isAllDone, nextState.isAllDone);
+    if(this.state.isAllDone === nextState.isAllDone) {
+      return true;
+    }
+    return false;
   }
 
   setDefaultMark() {
-    let tasksStatus = false;
+    // set default state true. It means all tasks done
+    let tasksStatus = true;
     this.state.tasks.forEach((task) => {
-      if(task.isDone === false) tasksStatus = true;
+      // if task not done, it'll change tasksStatus.
+      // it mean not all tasks done and checkbox will be not checked
+      if(task.isDone === false) tasksStatus = false;
     });
     this.setState({ isAllDone: tasksStatus });
-    taskService.actions.markAll(true);
   }
 
   markAll() {
     const { isAllDone } = this.state;
-    console.log('conponent');
-    taskService.actions.markAll(isAllDone);
+    const newStatus = !isAllDone;
+    this.setState({ isAllDone: newStatus });
+    taskService.actions.markAll(newStatus);
   }
 
   render() {
@@ -65,12 +80,15 @@ export default class TasksList extends Component {
       return <div>Loading...</div>;
     } else {
       return <div>
-        <input type="checkbox" defaultChecked={ isAllDone }
-          onChange={this.markAll.bind(this)} />
+        <input id="checkAllInput" type="checkbox" checked={ isAllDone }
+          onChange={ this.markAll.bind(this) }
+        />
         <ul>
           { tasks.length > 0 ? 
             tasks.map((task, index) => (
-              <TaskListItem key={index} task={task} />
+              <TaskListItem
+                key={index} task={task}
+              />
             )) :
             <p>No tasks</p>
           }
