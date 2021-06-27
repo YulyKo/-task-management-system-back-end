@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { userService, taskService } from '../../services';
 import app from '../../services/tasks/store';
 
-export default class NewTaskForm extends Component {
+export default class TaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,

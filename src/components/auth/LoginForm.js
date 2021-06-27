@@ -16,7 +16,14 @@ export default class LoginForm extends Component {
         email: '',
         password: '',
       },
+      access: false,
     };
+  }
+
+  setAccess() {
+    setTimeout(() => {
+      this.setState({ access: true });
+    }, 1000);
   }
 
   setAccessToken(res) {
@@ -26,13 +33,13 @@ export default class LoginForm extends Component {
   }
 
   validUser(res) {
-    console.log(res, res.message);
     if (res.message) {
-      this.setState({ userExistError: messages.USER_NOT_EXIST });
+      this.setState({ userExistError: res.message });
       this.setState({ access: false });
+    } else {
+      this.setAccessToken(res);
+      this.setAccess();
     }
-    this.setAccessToken(res);
-    this.setState({ access: true });
   }
 
   validPassword() {
@@ -64,11 +71,13 @@ export default class LoginForm extends Component {
 
   checkExistRequired(fieldName) {
     const errorsArrayName = fieldName + 'Error';
+    const message = messages.REQUARIED;
     const fieldValue = this.state.user[fieldName];
     let resMessage = validator.isEmpty(fieldValue) ?
-      messages.REQUARIED : '';
+      message : '';
     this.setState({ [errorsArrayName]: resMessage });
-    if (resMessage === '') return true;
+    if (resMessage === message) return false;
+    else return true;
   }
 
   handleValidation() {
@@ -77,21 +86,21 @@ export default class LoginForm extends Component {
       const isInputted = this.checkExistRequired(fieldName);
       validFomrStatus = isInputted;
 
-      if (validFomrStatus) {
+      if (validFomrStatus === true) {
       // check by rules
-        if (fieldName === 'email')
-          validFomrStatus = this.validEmail();
-        else if (fieldName === 'password')
-          validFomrStatus = this.validPassword();
-      }
+        if (fieldName === 'email' && this.validEmail() === false) {
+          validFomrStatus = false;
+        } else if (fieldName === 'password' && this.validPassword() === false) {
+          validFomrStatus = false;
+        }
+      } else validFomrStatus = false;
     }
     return validFomrStatus;
   }
 
   onSubmit(event) {
     event.preventDefault();
-    this.handleValidation();
-    if (this.state.emailError === '' && this.state.passwordError === '') {
+    if (this.handleValidation() !== false) {
       const user = this.state.user;
       const loginAction = userService.actions.login(user);
       loginAction.then((result) => this.validUser(result));
@@ -99,27 +108,27 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    const owner = userService.storage.getOwnerKey();
+    const { access, passwordError, emailError, userExistError } = this.state;
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
         placeholder="email"
         onChange={this.setFieldValue.bind(this, 'email')} />
-      <span className="error">{this.state.emailError}</span>
+      <span className="error">{emailError}</span>
 
       <input
         type="password"
         placeholder="password"
         onChange={this.setFieldValue.bind(this, 'password')} />
-      <span className="error">{this.state.passwordError}</span>
+      <span className="error">{passwordError}</span>
 
-      <span className="error">{this.state.userExistError}</span>
+      <span className="error">{userExistError}</span>
 
       <button type="submit">
         Login
       </button>
       {
-        owner ? 
+        access ? 
           <Redirect to={ HOME_PAGE } /> : ''
       }
     </form>;

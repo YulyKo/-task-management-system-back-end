@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ModalWindowShell from '../ModalWindowShell';
 import TaskDetails from './TaskDetails';
-import NewTaskForm from './NewTaskFrom';
+import TaskForm from './TaskFrom';
 import app from '../../services/tasks/store';
 import { taskService } from '../../services';
 
@@ -98,7 +98,7 @@ export default class Task extends Component {
       {
         !this.state.isFormHidden &&
         <ModalWindowShell>
-          <NewTaskForm childCloseModal={this.toggleEditForm.bind(this)} task={this.props.task}/>
+          <TaskForm childCloseModal={this.toggleEditForm.bind(this)} task={this.props.task}/>
         </ModalWindowShell>
       }
       <button onClick={this.deleteTask.bind(this)}>Delete</button>

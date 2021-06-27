@@ -135,7 +135,7 @@ export default class RegistrationForm extends Component {
           validFomrStatus = this.validPasswordConfirm();
         else if (fieldName === 'username')
           validFomrStatus = this.validUsername();
-      }
+      } else validFomrStatus = false;
     }
     return validFomrStatus;
   }
