@@ -6,23 +6,9 @@ import { userService } from './services/index';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: userService.storage.getToken(),
-    };
-  }
-
   render() {
-    if (this.state.token) {
-      return <BrowserRouter>
-        <Redirect to={HOME_PAGE} />
-        <RouterConfig />
-      </BrowserRouter>;
-    }
     return (
       <BrowserRouter>
-        {/* <HomePage /> */}
         <RouterConfig />
       </BrowserRouter>
     );

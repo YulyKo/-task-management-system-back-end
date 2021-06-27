@@ -94,7 +94,7 @@ export default class LoginForm extends Component {
     if (this.state.emailError === '' && this.state.passwordError === '') {
       const user = this.state.user;
       const loginAction = userService.actions.login(user);
-      loginAction.then(res => this.validUser(res));
+      loginAction.then((result) => this.validUser(result));
     }
   }
 
