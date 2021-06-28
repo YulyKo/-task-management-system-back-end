@@ -132,8 +132,9 @@ export default class TaskForm extends Component {
 
       <div className="priority__list"
         onChange={this.setFieldValue.bind(this, 'priority')}>
+        <label className="text">Priority</label>
         {PRIORITIES.map((data, index) =>
-          <label key={index} className={'priority__list_item radio__' + data}>{data}
+          <label key={index} className={'priority__list_item priority__' + data}>{data}
             <input className="input__radio" id={data} type="radio" value={data} name="priority"/>
           </label>
         )}

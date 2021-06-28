@@ -88,7 +88,7 @@ export default class Task extends Component {
       {
         !this.state.isTaskWindowHidden &&
         <ModalWindowShell>
-          <TaskDetails task={task} toggleHidden={this.toggleTaskWindow.bind(this)} />
+          <TaskDetails task={task} childCloseModal={this.toggleTaskWindow.bind(this)} />
         </ModalWindowShell>
       }
       <button  className="btn btn__edit" onClick={this.toggleEditForm.bind(this)}>Edit</button>
