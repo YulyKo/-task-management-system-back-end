@@ -110,40 +110,50 @@ export default class TaskForm extends Component {
     return newTask;
   }
 
+  close() {
+    this.props.childCloseModal();
+  }
+
   render() {
-    return <form id="form" onSubmit={this.onSubmit.bind(this)}>
-      <input
+    return <form className="form modal-window__form" id="form" onSubmit={this.onSubmit.bind(this)}>
+      <input className="input__text"
+        placeholder="title"
         type="text"
         defaultValue={this.state.task.title}
         onChange={this.setFieldValue.bind(this, 'title')} />
       <span className="error">{this.state.titleError}</span>
 
-      <textarea
+      <textarea className="input__textarea"
+        placeholder="description"
         defaultValue={this.state.task.description}
         onChange={this.setFieldValue.bind(this, 'description')}>
       </textarea>
-      <span className="error">{this.state.descriptionError}</span>
+      <span className="error-message">{this.state.descriptionError}</span>
 
-      <div onChange={this.setFieldValue.bind(this, 'priority')}>
+      <div className="priority__list"
+        onChange={this.setFieldValue.bind(this, 'priority')}>
         {PRIORITIES.map((data, index) =>
-          <input key={index} type="radio" value={data} name="priority"/>
+          <label key={index} className={'priority__list_item radio__' + data}>{data}
+            <input className="input__radio" id={data} type="radio" value={data} name="priority"/>
+          </label>
         )}
       </div>
-      <span className="error">{this.state.priorityError}</span>
+      <span className="error-message">{this.state.priorityError}</span>
 
       {
         // I can't set default due date from this.componentDidMount()
         this.props.task ?
-          <input
+          <input  className="input__date"
             type="date"
             defaultValue={this.formatDate(this.props.task.dueDate)}
             onChange={this.setFieldValue.bind(this, 'dueDate')} />
           :
-          <input
+          <input className="input__date"
             type="date"
             onChange={this.setFieldValue.bind(this, 'dueDate')} />
       }
-      <button type="submit">Add</button>
+      <button className="btn btn__submit" type="submit">Save</button>
+      <button onClick={this.close.bind(this)} className="btn btn__close" type="button">Close</button>
     </form>;
   }
 }

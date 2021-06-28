@@ -1,5 +1,9 @@
 @import './variables.css';
 
+:root {
+  --card-shadow: var(--laguna-color) 0px 2px 4px 0px inset;
+}
+
 body {
   background-color: var(--light-green);
 }
@@ -9,7 +13,7 @@ ul {
   padding: 3em;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 90rem;
+  width: calc(50% - 4rem - 6rem);
   background-color: var(--light-green);
   border-radius: 3px;
   box-shadow: var(--card-shadow);
@@ -30,9 +34,9 @@ ul {
   box-shadow: #B8DFD8 0px 1px 3px, #95cfc5 0px 1px 2px;
 }
 
-/* .page {
+.page {
   padding: 20px;
-} */
+}
 
 /* RootPage component */
 .home-page {
@@ -109,3 +113,43 @@ ul {
   padding: 20px;
 
 }
+
+/* home page componetn */
+.home-page {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.home-page > .title {
+  text-align: center;
+}
+
+.displaiedButton, .hidenButton, .logout {
+  /* from .btn  */
+  display: block;
+  border: none;
+  padding: 0 1.2rem;
+  margin: 1rem;
+  border-radius: 4px;
+  height: 3rem;
+}
+
+.logout {
+  /* own */
+  background-color: var(--laguna-color);
+  width: 20rem;
+}
+
+.displaiedButton {
+  /* own */
+  background-color: var(--green);
+  width: 20rem;
+}
+
+.hidenButton {
+  /* own */
+  /* background-color: var(--yellow);
+  width: 20rem; */
+  display: none;
+}
+
