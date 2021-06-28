@@ -16,10 +16,8 @@ export const RouterConfig = () =>
     <Route exact path={ROOT_PAGE} component={ RootPage } />
     <Route exact path={REGISTRATION} component={ RegistrationPage } />
     <Route exact path={LOGIN} component={ LoginPage } />
-    <Route path={CONFIRM} >
-      <Route path='' component={ NotConfirmedPage } />
-      <Route path='/:code' component={ ConfirmedPage } />
-    </Route>
+    <Route path={CONFIRM} component={ NotConfirmedPage } />
+    <Route path={CONFIRM_BY_EMAIL} component={ ConfirmedPage } />
 
     {/* private auth route to page with tasks */}
     <PrivateRoute path={ HOME_PAGE }>

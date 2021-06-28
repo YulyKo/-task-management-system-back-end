@@ -24,23 +24,24 @@ export class ConfirmedPage extends React.Component {
 
   render() {
     const { message, token } = this.state;
-    return <main>
+    return <main className="page confirmed-page">
+      <img className="confirmed-page__img" src="https://firebasestorage.googleapis.com/v0/b/green-peach.appspot.com/o/tms-resourses%2Ftms-img2.jpg?alt=media&token=343cc7da-84b6-4569-8851-09bc8ff268a9" alt="image" />
       {
         message === 'Confirmed' ?
-          <>
-            <h1>Account is confirmed</h1>
-            <p>You have access to system</p>
+          <div className="confirmed-page__container">
+            <h1 className="title">Account is confirmed</h1>
+            <p className="subtitle">You have access to system</p>
             {
               token ?
-                <Link to="/todo-list">Go to tasks</Link> :
-                <Link to="/login">Go to tasks</Link>
+                <Link className="confirmed-page__container_link" to="/todo-list">Go to tasks</Link> :
+                <Link className="confirmed-page__container_link" to="/login">Go to tasks</Link>
             }
-          </> :
-          <>
-            <h1>Account isn&#39;t confirmed</h1>
-            <p>User not exist</p>
-            <Link to="/registration">Go to registration</Link>
-          </>
+          </div> :
+          <div className="confirmed-page__container">
+            <h1 className="">Account isn&#39;t confirmed</h1>
+            <p className="">User not exist</p>
+            <Link className="confirmed-page__container_link" to="/registration">Go to registration</Link>
+          </div>
       }
     </main>;
   }

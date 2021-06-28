@@ -16,3 +16,13 @@
 .link:focus {
   outline: none;
 }
+
+/*  */
+.confirmed-page__container_link {
+  display: block;
+  outline: none;
+  text-decoration: none;
+  padding-right: 2em;
+  padding-top: 2em;
+  padding-bottom: 1em;
+}

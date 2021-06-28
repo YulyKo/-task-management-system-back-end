@@ -181,7 +181,7 @@ export default class RegistrationForm extends Component {
         Registration
       </button>
       {
-        access ? 
+        access ?
           <Redirect to={CONFIRM} /> : ''
       }
     </form>;
