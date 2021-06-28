@@ -4,6 +4,4 @@ const storage = require('./storage');
 
 module.exports = {
   actions,
-  mutations,
-  storage,
 };
