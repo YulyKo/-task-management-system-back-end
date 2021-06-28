@@ -22,7 +22,6 @@ export function createTask(task) {
       app.addRow(res);
     })
     .catch(error => {
-      console.log('error');
       checkErrorStatus(error.status);
     });
 }
@@ -34,7 +33,6 @@ export function changeoverTaskStatus(taskId, isDone) {
     body: JSON.stringify({ status: isDone })
   })
     .then(res => res.json())
-    .then((res) => console.log(res))
     .catch(error => {
       checkErrorStatus(error.status);
       changeoverTaskStatus(taskId, isDone);
@@ -77,7 +75,6 @@ export function markAll(status) {
   // let checkBoxesArray = document.querySelectorAll('input[type="checkbox"]');
   // checkBoxesArray.forEach((input) => {
   //   input.checked = status;
-  //   console.log(input.checked);
   // });
   // const checkAllInput = document.getElementById('checkAllInput');
   // checkAllInput.checked = status;
@@ -92,7 +89,5 @@ export function markAll(status) {
   //   })
   //   .then(res => {
   //     // change status 'isDone' at local storage tasks
-  //     console.log(res);
   //   })
-  //   .catch(error => console.log(error));
 }

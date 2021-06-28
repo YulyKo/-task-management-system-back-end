@@ -14,7 +14,6 @@ class PrivateRoute extends Component {
   render() {
     const token = userService.storage.getToken();
     const confirmed = userService.storage.getConfirmedStatus();
-    console.log(token, confirmed, token && confirmed );
     return <Route
       render={() => 
         // token && confirmed

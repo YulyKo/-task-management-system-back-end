@@ -4,7 +4,6 @@ import User from '../../models/user.class';
 import { CONFIRM } from '../../navigation/paths.const';
 import { userService } from '../../services';
 import { passwordParams, messages, locate as locales } from '../../utils/auth.const';
-// import { createBrowserHistory } from 'history';
 import { Redirect } from 'react-router-dom';
 
 export default class RegistrationForm extends Component {
@@ -41,7 +40,6 @@ export default class RegistrationForm extends Component {
     user.email = this.state.user.email;
     user.password = this.state.user.password;
     user.username = this.state.user.username;
-    console.log(user);
     return user;
   }
 
@@ -60,7 +58,6 @@ export default class RegistrationForm extends Component {
       this.setState({ access: true });
       this.setAccessToken(res);
     }
-    console.log(this.state);
   }
 
   validUsername() {
@@ -143,14 +140,12 @@ export default class RegistrationForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     if(this.handleValidation() !== false) {
-      console.log(this.state);
       const newUser = this.compareUser();
       const registrationAction = userService.actions.registration(newUser);
       registrationAction.then(res => {
         this.validUser(res);
       });
     }
-    console.log(this.handleValidation());
   }
 
   render() {

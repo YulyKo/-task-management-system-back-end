@@ -22,7 +22,6 @@ export function login(user) {
 }
 
 export function confirmUser(code) {
-  console.log(code);
   return fetch(`${BASE_URL}auth/confirm/${code}`, {
     method: 'PUT',
   })
@@ -53,7 +52,6 @@ function getAllTasksAfterRefreshToken() {
       res.json();
       if (res.staus === 401) {
         // window.location.pathname = '/login';
-        console.log(res);
       }
     })
     .then(
@@ -63,7 +61,6 @@ function getAllTasksAfterRefreshToken() {
           isLoaded: true,
         };
         // sort by done here
-        console.log(this.state.app);
       },
     );
 }

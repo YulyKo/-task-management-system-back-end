@@ -28,7 +28,6 @@ export class HomePage extends Component {
   }
 
   markAll() {
-    console.log('all mark?');
     const newStatus = !this.state.app.isAllDone;
     this.state.app.changeMarkAllTask(newStatus);
     taskService.actions.markAll(newStatus);
@@ -41,7 +40,6 @@ export class HomePage extends Component {
       let focus = function() {
         app.setFocusedId(row.id);
       };
-      // console.log(row);
       return <Task key={row.id} task={row} title={row.title}
         focused={row.id == app.focusedId}
         focus={focus} />;
@@ -57,7 +55,6 @@ export class HomePage extends Component {
       .then(
         (result) => {
           app.setDefaultRows(result);
-          console.log(result);
           this.setState({
             isLoaded: true,
           });

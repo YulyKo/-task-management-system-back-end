@@ -25,7 +25,7 @@ module.exports = {
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
     'no-irregular-whitespace': 'off',
-   
+    'no-console': ['error'],
     'no-empty': 'warn',
     'no-cond-assign': ['error', 'always'],
 
