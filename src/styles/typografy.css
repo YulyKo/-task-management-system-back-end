@@ -1,0 +1,23 @@
+@import './variables';
+
+/* //   typografy */
+.text, .title, .subtitle {
+  font-family: 'Dosis';
+  margin: 0;
+  /* text-wrap: wrap; */
+  color: var(--dark-gray);
+}
+
+.text {
+  font-size: 21px;
+  margin-top: 1.7em;
+}
+
+.subtitle {
+  font-size: 30px;
+}
+  
+.title {
+  font-size: 121px;
+  font-weight: 600;
+}

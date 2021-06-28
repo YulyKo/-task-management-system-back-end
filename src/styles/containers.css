@@ -1,0 +1,89 @@
+@import './variables.css';
+
+body {
+  background-color: var(--light-green);
+}
+
+ul {
+  margin: 0 auto;
+  padding: 3em;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 90rem;
+  background-color: var(--light-green);
+  border-radius: 3px;
+  box-shadow: var(--card-shadow);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  margin-bottom: 30px;
+  padding: 1.2rem 3rem;
+  background-color: var(--light-green);
+  width: fit-content;
+  max-width: calc(100% - 6rem);
+  box-shadow: var(--card-shadow);
+  border-radius: 3px;
+  box-shadow: #B8DFD8 0px 1px 3px, #95cfc5 0px 1px 2px;
+}
+
+.page {
+  padding: 20px;
+}
+
+/* RootPage component */
+.home-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.home-page__column {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  max-width: 40vw;
+  margin-top: 11rem;
+  z-index: 1;
+}
+
+.home-page__img {
+  display: block;
+  position: fixed;
+  z-index: 0;
+  margin-left: 45%;
+}
+
+.reg-page__title {
+  text-align: center;
+}
+
+/* reg-page__info - Registration Page */
+.home-page__info {
+  text-align: center;
+}
+
+.reg-page__info_link {
+  display: block;
+  outline: none;
+  text-decoration: none;
+  margin-top: 0.5em !important;
+  padding-bottom: 0;
+  padding-top: 0.2rem;
+}
+
+.reg-page__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* text-align: center; */
+}
+
+.reg-page__info_link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #357569;
+}

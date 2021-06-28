@@ -80,13 +80,10 @@ export default class Task extends Component {
 
   render() {
     const { title, task } = this.props;
-    return <li id={task.id}>
-      <input type="checkbox" checked={task.isDone} onChange={this.handleTaskStatus.bind(this)} />
-      <button onClick={this.toggleTaskWindow.bind(this)}>
-        <p>{title}</p>
-        {
-          task.isDone ? <p> done</p> : 'not done'
-        }
+    return <li id={task.id} className="card">
+      <input type="checkbox" classNsme="input__checkbox" checked={task.isDone} onChange={this.handleTaskStatus.bind(this)} />
+      <button className="btn__show-task-details" onClick={this.toggleTaskWindow.bind(this)}>
+        <p>{ title }</p>
       </button>
       {
         !this.state.isTaskWindowHidden &&
