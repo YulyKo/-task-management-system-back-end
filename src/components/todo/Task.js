@@ -45,7 +45,7 @@ export default class Task extends Component {
       isMarked: !this.state.isMarked
     });
     const { task } = this.props;
-    const { isDone } = this.props.task;
+    const { isDone, id } = this.props.task;
     this.state.app.markTask(task, !isDone);
     this.props.task.isDone = !isDone;
     taskService.actions.changeoverTaskStatus(id, !isDone);
