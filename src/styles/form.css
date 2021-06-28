@@ -13,6 +13,11 @@
   justify-content: center;
 }
 
+.input__checkbox[id="checkAllInput"], .checkAllInput-label {
+  margin: 0 auto !important;
+  width: fit-content;
+}
+
 /* //   inputs */
 .input__checkbox {
   position: relative;

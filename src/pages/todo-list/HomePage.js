@@ -126,9 +126,8 @@ export class HomePage extends Component {
           checked={ defaultCheckedAll }
           onChange={this.markAll.bind(this)}
         />
-        { app.getIsAllDone() ? 'true' : 'false' }
-        <label className="subtitle" htmlFor="checkAllInput">Mark/unmark all task as done</label>
-        
+        <label className="subtitle checkAllInput-label" htmlFor="checkAllInput">Mark/unmark all task as done</label>
+
         <ul>
           {this.setTasksList()}
         </ul>
