@@ -80,13 +80,10 @@ export default class Task extends Component {
 
   render() {
     const { title, task } = this.props;
-    return <li id={task.id}>
-      <input type="checkbox" checked={task.isDone} onChange={this.handleTaskStatus.bind(this)} />
-      <button onClick={this.toggleTaskWindow.bind(this)}>
-        <p>{title}</p>
-        {
-          task.isDone ? <p> done</p> : 'not done'
-        }
+    return <li id={task.id} className="card">
+      <input type="checkbox" className="input__checkbox" checked={task.isDone} onChange={this.handleTaskStatus.bind(this)} />
+      <button className="btn__show-task-details" onClick={this.toggleTaskWindow.bind(this)}>
+        <p className="task-name">{ title }</p>
       </button>
       {
         !this.state.isTaskWindowHidden &&
@@ -94,14 +91,14 @@ export default class Task extends Component {
           <TaskDetails task={task} toggleHidden={this.toggleTaskWindow.bind(this)} />
         </ModalWindowShell>
       }
-      <button onClick={this.toggleEditForm.bind(this)}>Edit - it is link</button>
+      <button  className="btn btn__edit" onClick={this.toggleEditForm.bind(this)}>Edit</button>
       {
         !this.state.isFormHidden &&
         <ModalWindowShell>
           <TaskForm childCloseModal={this.toggleEditForm.bind(this)} task={this.props.task}/>
         </ModalWindowShell>
       }
-      <button onClick={this.deleteTask.bind(this)}>Delete</button>
+      <button className="btn btn__delete" onClick={this.deleteTask.bind(this)}>Delete</button>
     </li>;
   }
 }

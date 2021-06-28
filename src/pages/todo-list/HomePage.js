@@ -99,19 +99,21 @@ export class HomePage extends Component {
   }
 
   render() {
-    let btn_class = this.state.isHidden ? 'blackButton' : 'whiteButton';
+    let btn_class = this.state.isHidden ? 'hidenButton' : 'displaiedButton';
     const { error, isLoaded, app, defaultCheckedAll } = this.state;
     if (error) {
-      return <div>Error: {error.message}</div>;
+      return <div className="title">Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <div className="text">Loading...</div>;
     } else {
-      return <main>
-        <h1>New totdo list with app stage</h1>
-        <LogoutButton />
-        <button className={btn_class} onClick={this.closeModal.bind(this)} >
-          Create a task
-        </button>
+      return <main className="page home-page">
+        <h1 className="title">TMS task list</h1>
+        <div className="btns_container">
+          <LogoutButton />
+          <button className={btn_class} onClick={this.closeModal.bind(this)} >
+            Add a task
+          </button>
+        </div>
         {
           this.state.isHidden && 
             <ModalWindowShell>
@@ -120,12 +122,12 @@ export class HomePage extends Component {
               <TaskForm childCloseModal={this.closeModal.bind(this)}/>
             </ModalWindowShell>
         }
-        <input id="checkAllInput" type="checkbox"
+        <input id="checkAllInput" type="checkbox" className="input__checkbox"
           checked={ defaultCheckedAll }
           onChange={this.markAll.bind(this)}
         />
-        
-        { app.getIsAllDone() ? 'true' : 'false' }
+        <label className="subtitle checkAllInput-label" htmlFor="checkAllInput">Mark/unmark all task as done</label>
+
         <ul>
           {this.setTasksList()}
         </ul>

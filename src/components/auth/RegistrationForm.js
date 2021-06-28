@@ -150,38 +150,38 @@ export default class RegistrationForm extends Component {
 
   render() {
     const { access } = this.state;
-    return <form id="form" onSubmit={this.onSubmit.bind(this)}>
-      <input
+    return <form className="form" id="form" onSubmit={this.onSubmit.bind(this)}>
+      <input className="input__text"
         type="text"
         placeholder="username"
         onChange={this.setFieldValue.bind(this, 'username')} />
-      <span className="error">{this.state.usernameError}</span>
+      <span className="error-message">{this.state.usernameError}</span>
 
-      <input
+      <input className="input__text"
         type="text"
         placeholder="email"
         onChange={this.setFieldValue.bind(this, 'email')} />
-      <span className="error">{this.state.emailError}</span>
+      <span className="error-message">{this.state.emailError}</span>
 
-      <input
+      <input className="input__text"
         type="password"
         placeholder="password"
         onChange={this.setFieldValue.bind(this, 'password')} />
-      <span className="error">{this.state.passwordError}</span>
+      <span className="error-message">{this.state.passwordError}</span>
 
-      <input
+      <input className="input__text"
         type="password"
-        placeholder="passwordConfirm"
+        placeholder="confirm password"
         onChange={this.setFieldValue.bind(this, 'passwordConfirm')} />
-      <span className="error">{this.state.passwordConfirmError}</span>
+      <span className="error-message">{this.state.passwordConfirmError}</span>
 
-      <span className="error">{this.state.userExistError}</span>
+      <span className="error-message">{this.state.userExistError}</span>
 
-      <button type="submit">
+      <button type="submit" className="btn btn__submit">
         Registration
       </button>
       {
-        access ? 
+        access ?
           <Redirect to={CONFIRM} /> : ''
       }
     </form>;

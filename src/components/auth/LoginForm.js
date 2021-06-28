@@ -109,22 +109,22 @@ export default class LoginForm extends Component {
 
   render() {
     const { access, passwordError, emailError, userExistError } = this.state;
-    return <form id="form" onSubmit={this.onSubmit.bind(this)}>
-      <input
+    return <form className="form" id="form" onSubmit={this.onSubmit.bind(this)}>
+      <input className="input__text"
         type="text"
         placeholder="email"
         onChange={this.setFieldValue.bind(this, 'email')} />
-      <span className="error">{emailError}</span>
+      <span className="error-message">{emailError}</span>
 
-      <input
+      <input className="input__text"
         type="password"
         placeholder="password"
         onChange={this.setFieldValue.bind(this, 'password')} />
-      <span className="error">{passwordError}</span>
+      <span className="error-message">{passwordError}</span>
 
-      <span className="error">{userExistError}</span>
+      <span className="error-message">{userExistError}</span>
 
-      <button type="submit">
+      <button className="btn btn__submit" type="submit">
         Login
       </button>
       {

@@ -1,0 +1,28 @@
+.link {
+  display: block;
+  outline: none;
+  text-decoration: none;
+  padding-left: 0;
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #357569;
+}
+
+.link:focus {
+  outline: none;
+}
+
+/*  */
+.confirmed-page__container_link {
+  display: block;
+  outline: none;
+  text-decoration: none;
+  padding-right: 2em;
+  padding-top: 2em;
+  padding-bottom: 1em;
+}

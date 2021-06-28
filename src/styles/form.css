@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap');
+@import './variables';
+
+
+/* // constainers */
+.form {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.btns_container {
+  display: flex;
+  justify-content: center;
+}
+
+.input__checkbox[id="checkAllInput"], .checkAllInput-label {
+  margin: 0 auto !important;
+  width: fit-content;
+}
+
+/* //   inputs */
+.input__checkbox {
+  position: relative;
+  /* width: 20px !important; */
+  height: 20px !important;
+  display: block;
+  cursor: pointer;
+  margin-right: 2em;
+  border: none;
+  box-shadow: var(--blue) 0px 2px 5px -1px, var(--blue) 0px 1px 3px -1px;
+}
+
+.input__text, .input__textarea {
+  display: block;
+  width: calc(100% - 6rem);
+  margin: 2em 0 1rem 0;
+  padding: 1em 3em;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--white);
+  box-shadow: var(--green) 0px 2px 4px 0px inset;
+
+  /* typography */
+  font-size: 16px;
+  color: var(--dark-gray);
+}
+
+.input__text:focus, .input__textarea:focus {
+  text-decoration: none;
+}
+
+.input__text:hover, .input__textarea:hover {
+  background-color: #e7f4f2;
+}
+
+.input__textarea {
+  padding-top: 1.7rem;
+  resize: none;
+  overflow: auto;
+}
+  
+.input__radio {
+  /* // @extend .input__checkbox */
+  height: 20px;
+  width: 20px;
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  margin-top: 7px;
+}
+
+.priority__list {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.priority__list_item {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.radio__1 {
+  /* background-color: var(--white); */
+  box-shadow: var(--white) 0px 30px 60px -12px inset,
+  var(--white) 0px 18px 36px -18px inset;
+}
+
+.radio__2 {
+  /* background-color: var(--prority-2); */
+  box-shadow: var(--prority-2) 0px 30px 60px -12px inset,
+  var(--prority-2) 0px 18px 36px -18px inset;
+}
+
+.radio__3 {
+  /* background-color: var(--blue); */
+  box-shadow: var(--blue) 0px 30px 60px -12px inset,
+  var(--blue) 0px 18px 36px -18px inset;
+}
+
+.radio__4 {
+  /* background-color: var(--yellow); */
+  box-shadow: var(--yellow) 0px 30px 60px -12px inset,
+var(--yellow) 0px 18px 36px -18px inset;
+/* box-shadow: var(--yellow) 0px 25px 50px -12px; */
+}
+
+.radio__5 {
+  /* background-color: var(--red); */
+  box-shadow: var(--red) 0px 30px 60px -12px inset,
+  var(--red) 0px 18px 36px -18px inset;
+}
+
+.input__date {
+  display: block;
+  margin: 0 auto;
+  border: none;
+  padding: 1rem;
+}
+
+.btn {
+  display: block;
+  border: none;
+  padding: 0 1.2rem;
+  margin: 0.5rem;
+  border-radius: 4px;
+  height: 3rem;
+  /* // width: 4rem; */
+
+}
+
+.btn:hover {
+  background: var(--dark-gray);
+  color: var(--yellow);
+}
+
+.btn__submit {
+  /* @extend .btn; */
+  margin: 0;
+  margin-bottom: 10px;
+  margin: 2em auto;
+  background: var(--green);
+  box-shadow: #d0ecde 0px 3px 8px;
+}
+
+.btn__delete {
+  background-color: var(--light-green);
+  box-shadow: var(--red) 0px 0.0625em 0.0625em, var(--red) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.btn__edit {
+  background-color: var(--light-green);
+  box-shadow: var(--yellow) 0px 0.0625em 0.0625em, var(--yellow) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.btn__show-task-details {
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+/* error message */
+.error-message {
+  display: block;
+  margin-bottom: 1em;
+  margin-left: 0.4rem;
+  font-size: 16px;
+  color: var(--red);
+}
+
+/* modal form */
+.modal-window {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.modal-window__form {
+  width: 100%;
+  background: var(--white);
+  padding: 3rem;
+  z-index: 1;
+  box-shadow: antiquewhite;
+}
+
+.btn__close {
+  margin-left: auto;
+  background-color: var(--white);
+}

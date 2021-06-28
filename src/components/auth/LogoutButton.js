@@ -20,7 +20,7 @@ export default class LogoutButton extends Component {
   render() {
     const { clicked } = this.state;
     return <>
-      <button onClick={this.logout.bind(this)}>Logout</button>
+      <button className="logout" onClick={this.logout.bind(this)}>Logout</button>
       {
         clicked ? <Redirect to={ROOT_PAGE} /> : ''
       }
