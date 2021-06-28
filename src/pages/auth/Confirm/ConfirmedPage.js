@@ -1,10 +1,8 @@
-import { any } from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { authService } from '../../services';
-import { TOKEN_NAME } from '../../utils/auth.consts';
+import { authService } from '../../../services';
 
-export class ConfirmPage extends React.Component {
+export class ConfirmedPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -25,12 +23,18 @@ export class ConfirmPage extends React.Component {
   render() {
     const { message } = this.state;
     return <main>
-      <h1>For confirm click to button</h1>
-      { message }
       {
         message === 'Confirmed' ?
-          <Link to="/todo-list">Go to tasks</Link> :
-          <Link to="/login">Go to login</Link>
+          <>
+            <h1>Account is confirmed</h1>
+            <p>You have access to system</p>
+            <Link to="/todo-list">Go to tasks</Link>
+          </> :
+          <>
+            <h1>Account isn&#39;t confirmed</h1>
+            <p>User not exist</p>
+            <Link to="/registration">Go to registration</Link>
+          </>
       }
     </main>;
   }

@@ -1,7 +1,7 @@
 export const passwordParams = {
-  minLength: 8,
-  minLowercase: 1,
-  minUppercase: 1,
+  minLength: 6,
+  minLowercase: 0,
+  minUppercase: 0,
   minNumbers: 0,
   minSymbols: 0,
   returnScore: false,
@@ -17,11 +17,15 @@ export const locate = ['en-US'];
 
 export const messages = {
   INVALID_PASSWORD: `Password is not correct.
-  It must have minimum 8 letters, minimum one uppercase and one lovercase letter`,
+  It must have minimum 6 symbols or letters`,
   INVALID_EMAIL: 'Email is not correct',
   INVALID_USERNAME: 'Username must have only letters and numbers',
   REQUARIED: 'Cannot be empty',
   NOT_EQUALS_PASSWRODS: 'Passwords not equals',
+  USER_EXIST: 'User with this email already exist',
+  USER_NOT_EXIST: 'User with this email already don&#39;t exist',
 };
 
-export const TOKEN_NAME = 'tms-access-token';
+export const ACCESS_TOKEN = 'tms-access-token';
+export const OWNER_KEY = 'tms-owner';
+export const CONFIRMED_STATUS = 'tms-confirmed';

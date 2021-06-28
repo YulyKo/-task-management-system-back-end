@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export class HomePage extends React.Component {
+export class RootPage extends React.Component {
   render() {
     return <main>
       <h1>Welcome to TMS</h1>

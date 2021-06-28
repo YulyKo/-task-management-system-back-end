@@ -1,11 +1,12 @@
 import React, { Component }  from 'react';
 import validator from 'validator';
 import User from '../../models/user.class';
-import { authService } from '../../services';
-import { passwordParams, messages, locate as locales, TOKEN_NAME } from '../../utils/auth.consts';
+import { CONFIRM } from '../../navigation/paths.const';
+import { userService } from '../../services';
+import { passwordParams, messages, locate as locales } from '../../utils/auth.const';
+import { Redirect } from 'react-router-dom';
 
 export default class RegistrationForm extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -15,13 +16,18 @@ export default class RegistrationForm extends Component {
       passwordConfirmError: '',
       userExistError: '',
       user: {
-        email: 'test@mail.com',
-        password: '1qASDFGHJKL',
-        username: 'sdfghj',
-        passwordConfirm: '1qASDFGHJKL',
+        email: '',
+        password: '',
+        username: '',
+        passwordConfirm: '',
       },
+      access: false,
     };
   }
+
+  // test user
+  // "email": "test@mail.com",
+  // "password": "1qASDFGHJKL"
 
   setFieldValue(field, e){
     let fields = this.state.user;
@@ -34,51 +40,68 @@ export default class RegistrationForm extends Component {
     user.email = this.state.user.email;
     user.password = this.state.user.password;
     user.username = this.state.user.username;
-    console.log(user);
     return user;
   }
 
   setAccessToken(res) {
     const token = res.accessToken;
-    localStorage.setItem(TOKEN_NAME, token);
-    console.log(localStorage.getItem(TOKEN_NAME));
+    userService.storage.setToken(token);
   }
 
   validUser(res) {
     const key = Object.keys(res)[0];
     if (key === 'message') {
       this.setState({ userExistError: messages.USER_EXIST });
+      this.setState({ access: false });
+    } else {
+      userService.storage.setOwnerKey(this.state.user.email);
+      this.setState({ access: true });
+      this.setAccessToken(res);
     }
-    this.setAccessToken(res);
   }
 
   validUsername() {
     const username = this.state.user.username;
-    validator.isAlphanumeric(username, locales, { ignore: '^[a-zA-Z а-яА-Я\-]+$' }) ?
-      this.setState({ usernameError: '' }) :
+    const validStatus = validator.isAlphanumeric(username, locales, { ignore: '^[a-zA-Z а-яА-Я\-]+$' });
+    if (validStatus){
+      this.setState({ usernameError: '' });
+    } else {
       this.setState({ usernameError: messages.INVALID_USERNAME });
+      return false;
+    }
   }
 
   validPasswordConfirm() {
     const password = this.state.user.password;
     const passwordConfirm = this.state.user.passwordConfirm;
-    validator.equals(password, passwordConfirm) ?
-      this.setState({ passwordConfirmError: '' }) :
+    const validStatus = validator.equals(password, passwordConfirm);
+    if (validStatus){
+      this.setState({ passwordConfirmError: '' });
+    } else {
       this.setState({ passwordConfirmError: messages.NOT_EQUALS_PASSWRODS });
+      return false;
+    }
   }
 
   validPassword() {
     const password = this.state.user.password;
-    validator.isStrongPassword(password, passwordParams) ?
-      this.setState({ passwordError: '' }) :
+    const validStatus = validator.isStrongPassword(password, passwordParams);
+    if (validStatus){
+      this.setState({ passwordError: '' });
+    } else {
       this.setState({ passwordError: messages.INVALID_PASSWORD });
+      return false;
+    }
   }
 
   validEmail() {
     const email = this.state.user.email;
-    validator.isEmail(email) ?
-      this.setState({ emailError: '' }) :
+    if (validator.isEmail(email)){
+      this.setState({ emailError: '' });
+    } else {
       this.setState({ emailError: messages.INVALID_EMAIL });
+      return false;
+    }
   }
 
   checkExistRequired(fieldName) {
@@ -88,56 +111,45 @@ export default class RegistrationForm extends Component {
     let resMessage = validator.isEmpty(fieldValue) ?
       message : '';
     this.setState({ [errorsArrayName]: resMessage });
-    if (resMessage === '') return true;
+    if (resMessage === message) return false;
+    else return true;
   }
 
   handleValidation() {
+    let validFomrStatus = true;
     for (const fieldName in this.state.user) {
       // check requiered
-      let isInputted = this.checkExistRequired(fieldName);
+      const isInputted = this.checkExistRequired(fieldName);
+      validFomrStatus = isInputted;
 
-      if (isInputted) {
-        // check by rules
-        switch (fieldName) {
-        case 'email':
-          this.validEmail();
-          break;
-
-        case 'password':
-          this.validPassword();
-          break;
-        
-        case 'passwordConfirm':
-          this.validPasswordConfirm();
-          break;
-
-        case 'username':
-          this.validUsername();
-          break;
-        
-        default:
-          break;
-        }
-      }
+      if (validFomrStatus) {
+      // check by rules
+        if (fieldName === 'email')
+          validFomrStatus = this.validEmail();
+        else if (fieldName === 'password')
+          validFomrStatus = this.validPassword();
+        else if (fieldName === 'passwordConfirm')
+          validFomrStatus = this.validPasswordConfirm();
+        else if (fieldName === 'username')
+          validFomrStatus = this.validUsername();
+      } else validFomrStatus = false;
     }
+    return validFomrStatus;
   }
 
   onSubmit(event) {
     event.preventDefault();
-    this.handleValidation();
-    if (
-      this.state.emailError === '' &&
-      this.state.passwordError === '' &&
-      this.state.usernameError === '' &&
-      this.state.passwordConfirmError === '') {
+    if(this.handleValidation() !== false) {
       const newUser = this.compareUser();
-      const smth = authService.registration(newUser);
-      smth.then(res => this.validUser(res));
+      const registrationAction = userService.actions.registration(newUser);
+      registrationAction.then(res => {
+        this.validUser(res);
+      });
     }
-    console.log(this.state.userExistError);
   }
 
   render() {
+    const { access } = this.state;
     return <form id="form" onSubmit={this.onSubmit.bind(this)}>
       <input
         type="text"
@@ -168,6 +180,10 @@ export default class RegistrationForm extends Component {
       <button type="submit">
         Registration
       </button>
+      {
+        access ? 
+          <Redirect to={CONFIRM} /> : ''
+      }
     </form>;
   }
 }

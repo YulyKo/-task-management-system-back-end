@@ -1,14 +1,15 @@
 import React, { Component }  from 'react';
 import { Task } from '../../models/task.class';
-import { PRIORITIES } from '../../utils/priorities';
+import { PRIORITIES } from '../../utils/priorities.const';
 import PropTypes from 'prop-types';
-import { taskService } from '../../services';
+import { userService, taskService } from '../../services';
+import app from '../../services/tasks/store';
 
 export default class TaskForm extends Component {
   static get propTypes() { 
     return { 
       task: PropTypes.any,
-      toggleHidden: PropTypes.func,
+      childCloseModal: PropTypes.func,
     };
   }
 
@@ -19,15 +20,15 @@ export default class TaskForm extends Component {
       descriptionError: '',
       priorityError: '',
       task: {},
+      app: app,
     };
   }
 
   componentDidMount() {
-    console.log(match.url);
-    // if (this.props.task) {
-    //   this.props.task.dueDate = this.formatDate(this.props.task.dueDate);
-    //   this.setState({ task: this.props.task });
-    // }
+    if (this.props.task) {
+      this.props.task.dueDate = this.formatDate(this.props.task.dueDate);
+      this.setState({ task: this.props.task });
+    }
   }
 
   onSubmit(event) {
@@ -35,6 +36,8 @@ export default class TaskForm extends Component {
     // undefined because I dont set true value in this.handleValidation(event)
     if (this.handleValidation(event) === undefined) {
       this.props.task ? this.update() : this.create();
+      // close window
+      this.props.childCloseModal();
     }
   }
 
@@ -43,22 +46,24 @@ export default class TaskForm extends Component {
     // set default data
     task.dueDate = task.dueDate ? task.dueDate : Date.now();
     task.priority = +task.priority;
-    taskService.createTask(task);
+    task.ownerEmail = userService.storage.getOwnerKey();
+    taskService.actions.createTask(task);
+    this.state.app.addRow(task);
   }
 
   update() {
     // set task value
     const task = this.compareTask();
-    // TODO update data local
-    // http calling here
-    taskService.updateTask(task);
+    // update local task
+    this.state.app.updateRow(task);
+    // update at API
+    taskService.actions.updateTask(task);
   }
 
   setFieldValue(field, e){
     let fields = this.state.task;
     fields[field] = e.target.value;
     this.setState({fields});
-    console.log(fields);
   }
 
   checkExistRequired(fieldName) {
@@ -96,10 +101,12 @@ export default class TaskForm extends Component {
   compareTask = () => {
     const newTask = new Task();
     const fieldsData = this.state.task;
+    newTask.id = this.state.task.id;
     newTask.title = fieldsData.title;
     newTask.description = fieldsData.description;
     newTask.priority = fieldsData.priority;
     newTask.dueDate = fieldsData.dueDate;
+    newTask.ownerEmail = userService.storage.getOwnerKey();
     return newTask;
   }
 
