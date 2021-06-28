@@ -106,7 +106,6 @@ ul {
   height: 100%;
 }
 
-
 .confirmed-page__container {
   margin-left: 43%;
   background-color: var(--white);
@@ -153,3 +152,37 @@ ul {
   display: none;
 }
 
+.task-component {
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: var(--green) 0px 60px 40px -7px;
+  padding: 3rem;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.priority__1 {
+  /* background-color: var(--white); */
+  box-shadow: var(--white) 0px 20px 30px;
+}
+
+.priority__2 {
+  /* background-color: var(--prority-2); */
+  box-shadow: var(--prority-2) 0px 20px 30px;
+}
+
+.priority__3 {
+  /* background-color: var(--blue); */
+  box-shadow: var(--blue) 0px 20px 30px;
+}
+
+.priority__4 {
+  /* background-color: var(--yellow); */
+  box-shadow: var(--yellow) 0px 20px 30px;
+/* box-shadow: var(--yellow) 0px 25px 50px -12px; */
+}
+
+.priority__5 {
+  /* background-color: var(--red); */
+  box-shadow: var(--red) 0px 20px 30px;
+}
